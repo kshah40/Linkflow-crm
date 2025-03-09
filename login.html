@@ -359,6 +359,51 @@
                 showError(error);
             }
         });
+
+        // Add this at the beginning of your script section
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const session = supabase.auth.session();
+            if (session) {
+                window.location.href = '/dashboard';
+            }
+        });
+
+        // Update the signInWithEmail function
+        async function signInWithEmail(email, password) {
+            try {
+                const { user, session, error } = await supabase.auth.signIn({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) throw error;
+
+                if (user) {
+                    window.location.href = '/dashboard';
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        // Update the signUpWithEmail function
+        async function signUpWithEmail(email, password) {
+            try {
+                const { user, session, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) throw error;
+
+                if (user) {
+                    alert('Registration successful! Please check your email for verification.');
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        }
     </script>
 </body>
 </html> 

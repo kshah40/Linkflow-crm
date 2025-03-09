@@ -206,7 +206,7 @@
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="./index.html" class="flex items-center">
+                        <a href="/" class="flex items-center">
                             <svg class="h-8 w-8 text-primary-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -331,7 +331,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-8">
-                    <a href="./investor-crm.html" class="text-primary-600 font-medium hover:text-primary-700">Learn more about Investor CRM →</a>
+                    <a href="/investor-crm" class="text-primary-600 font-medium hover:text-primary-700">Learn more about Investor CRM →</a>
                 </div>
             </div>
 
@@ -389,7 +389,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-8">
-                    <a href="./qa-management.html" class="text-primary-600 font-medium hover:text-primary-700">Learn more about Q&A Management →</a>
+                    <a href="/qa-management" class="text-primary-600 font-medium hover:text-primary-700">Learn more about Q&A Management →</a>
                 </div>
             </div>
         </div>
@@ -407,7 +407,7 @@
                         Join thousands of startups using LinkFlow to manage their fundraising process more effectively.
                     </p>
                     <div class="mt-8 flex justify-center">
-                        <a href="./login.html?signup=true" class="gradient-bg text-white px-8 py-3 rounded-md text-lg font-medium hover:opacity-90">
+                        <a href="/login?signup=true" class="gradient-bg text-white px-8 py-3 rounded-md text-lg font-medium hover:opacity-90">
                             Get Started
                         </a>
                     </div>
@@ -421,7 +421,7 @@
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="col-span-1 md:col-span-2">
-                    <a href="./index.html" class="modern-logo">
+                    <a href="/" class="modern-logo">
                         <div class="logo-icon">
                             <div class="logo-symbol"></div>
                         </div>
@@ -447,7 +447,7 @@
         window.addEventListener('load', () => {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('signup') === 'true') {
-                window.location.href = './login.html';
+                window.location.href = '/login';
                 // The login page will handle showing the signup form
             }
         });
