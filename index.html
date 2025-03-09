@@ -207,13 +207,22 @@
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
                         <a href="/" class="flex items-center">
-                            <svg class="h-8 w-8 text-primary-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="h-12 w-12 text-primary-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <span class="ml-2 text-2xl font-bold gradient-text">LinkFlow</span>
+                            <h1 class="ml-3 text-4xl font-bold gradient-text">LinkFlow</h1>
                         </a>
+                    </div>
+                    <!-- Mobile menu button -->
+                    <div class="flex items-center sm:hidden">
+                        <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
                         <a href="/investor-crm" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
@@ -232,6 +241,28 @@
                         Sign In
                     </a>
                     <a href="/login?signup=true" class="text-white gradient-bg hover:opacity-90 px-4 py-2 rounded-md text-sm font-medium">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/investor-crm" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                    Investor CRM
+                </a>
+                <a href="/qa-management" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                    Q&A Management
+                </a>
+                <a href="/blog" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                    Blog
+                </a>
+                <div class="pt-4 pb-3 border-t border-gray-200">
+                    <a href="/login" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                        Sign In
+                    </a>
+                    <a href="/login?signup=true" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
                         Get Started
                     </a>
                 </div>
@@ -450,6 +481,11 @@
                 window.location.href = '/login';
                 // The login page will handle showing the signup form
             }
+        });
+
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
         });
     </script>
 </body>
