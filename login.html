@@ -174,10 +174,19 @@
     </div>
 
     <script>
-        // Initialize Supabase client
+        // Initialize Supabase client with proper configuration
         const supabaseUrl = 'https://pqnntdsdtzgibqwuegwc.supabase.co';
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxbm50ZHNkdHpnaWJxd3VlZ3djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE0NDc1MzcsImV4cCI6MjA1NzAyMzUzN30.Wj0xa2UmZolk079DFzrstsBGzOAfgVlUMHJKDEqn8Jk';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+        
+        // Create Supabase client
+        let supabase;
+        try {
+            supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+        } catch (error) {
+            console.error('Failed to initialize Supabase client:', error);
+            // Try alternative initialization
+            supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+        }
 
         // Show/Hide loading spinner
         function showLoading(formType) {
@@ -196,6 +205,7 @@
 
         // Show error message
         function showError(message) {
+            console.error('Error:', message);
             const errorAlert = document.getElementById('errorAlert');
             const errorMessage = document.getElementById('errorMessage');
             errorMessage.textContent = message;
@@ -220,14 +230,18 @@
 
             try {
                 showLoading('login');
+                console.log('Attempting login...');
                 const { data, error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password
+                    email: email,
+                    password: password
                 });
+
+                console.log('Login response:', { data, error });
 
                 if (error) throw error;
 
-                if (data.user) {
+                if (data?.user) {
+                    console.log('Login successful, redirecting...');
                     window.location.href = '/dashboard';
                 }
             } catch (error) {
@@ -254,9 +268,10 @@
 
             try {
                 showLoading('signup');
+                console.log('Attempting signup...');
                 const { data, error } = await supabase.auth.signUp({
-                    email,
-                    password,
+                    email: email,
+                    password: password,
                     options: {
                         data: {
                             full_name: fullName,
@@ -265,10 +280,12 @@
                     }
                 });
 
+                console.log('Signup response:', { data, error });
+
                 if (error) throw error;
 
-                if (data.user) {
-                    // Create profile in the profiles table
+                if (data?.user) {
+                    console.log('Creating profile...');
                     const { error: profileError } = await supabase
                         .from('profiles')
                         .insert([
@@ -284,7 +301,6 @@
 
                     showSuccess('Registration successful! Please check your email for verification.');
                     document.getElementById('signupForm').reset();
-                    // Switch back to login form
                     toggleForm({ preventDefault: () => {} });
                 }
             } catch (error) {
