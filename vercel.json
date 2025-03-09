@@ -8,6 +8,38 @@
   ],
   "routes": [
     {
+      "src": "/login",
+      "dest": "/login.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/dashboard.html"
+    },
+    {
+      "src": "/investor-crm",
+      "dest": "/investor-crm.html"
+    },
+    {
+      "src": "/qa-management",
+      "dest": "/qa-management.html"
+    },
+    {
+      "src": "/blog",
+      "dest": "/blog.html"
+    },
+    {
+      "src": "/profile",
+      "dest": "/profile.html"
+    },
+    {
+      "src": "/tasks",
+      "dest": "/tasks.html"
+    },
+    {
+      "src": "/projects",
+      "dest": "/projects.html"
+    },
+    {
       "handle": "filesystem"
     },
     {
