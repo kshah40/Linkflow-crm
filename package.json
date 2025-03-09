@@ -1,0 +1,18 @@
+{
+  "name": "linkflow-crm",
+  "version": "1.0.0",
+  "description": "LinkFlow CRM Dashboard",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -s .",
+    "build": "echo 'No build step needed for static files'",
+    "git-init": "git init"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

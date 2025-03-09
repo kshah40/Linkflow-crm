@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Templates - LinkFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Include the same styles as before */
+        .gradient-text {
+            background: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+        }
+
+        /* Modern Logo Style */
+        .modern-logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-symbol {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            transform: rotate(-45deg);
+        }
+
+        .logo-symbol::before,
+        .logo-symbol::after {
+            content: '';
+            position: absolute;
+            background: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #22c55e, #0ea5e9) 1;
+            transition: all 0.4s ease;
+        }
+
+        .logo-symbol::before {
+            width: 16px;
+            height: 16px;
+            border-radius: 40% 60% 50% 50%;
+            top: 0;
+            left: 0;
+        }
+
+        .logo-symbol::after {
+            width: 12px;
+            height: 12px;
+            border-radius: 60% 40% 50% 50%;
+            bottom: 0;
+            right: 0;
+        }
+
+        .logo-text span {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
+                    </a>
+                    <div class="hidden md:flex ml-10 space-x-8">
+                        <a href="investor-crm.html" class="text-gray-500 hover:text-gray-900">Investor CRM</a>
+                        <a href="qa-management.html" class="text-primary-600 font-medium">Q&A Management</a>
+                        <a href="blog.html" class="text-gray-500 hover:text-gray-900">Blog</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Sign In</a>
+                    <a href="#" class="gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 pt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center space-x-2 text-gray-500">
+                <a href="index.html" class="hover:text-gray-900">Home</a>
+                <span>/</span>
+                <a href="qa-management.html" class="hover:text-gray-900">Q&A Management</a>
+                <span>/</span>
+                <span class="text-gray-900">Smart Templates</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="bg-gray-50 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                    <span class="block">Smart Templates</span>
+                    <span class="block text-primary-600">Respond Faster & Better</span>
+                </h1>
+                <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                    Pre-built templates for common investor questions and due diligence requests, helping you respond quickly and professionally.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Categories -->
+    <div class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Company Overview -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Company Overview</h3>
+                    <p class="text-gray-600">Templates for company mission, vision, team structure, and market position.</p>
+                </div>
+
+                <!-- Financial Information -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Financial Information</h3>
+                    <p class="text-gray-600">Templates for revenue metrics, growth projections, and funding history.</p>
+                </div>
+
+                <!-- Product Details -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Product Details</h3>
+                    <p class="text-gray-600">Templates for product features, roadmap, and competitive advantages.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Preview -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Sample Template Preview</h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-primary-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-900">Company Overview</h4>
+                            <p class="text-gray-600 mt-2">
+                                [Company Name] is a [industry] company that [main value proposition]. 
+                                Founded in [year], we've grown to [key metric] and serve [target market].
+                            </p>
+                        </div>
+                        <div class="border-l-4 border-primary-500 pl-4">
+                            <h4 class="text-lg font-semibold text-gray-900">Market Opportunity</h4>
+                            <p class="text-gray-600 mt-2">
+                                The [industry] market is currently valued at [market size] and growing at [growth rate].
+                                Our unique approach addresses [pain point] by [solution].
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="index.html" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
+                    </a>
+                    <p class="mt-4 text-gray-500">
+                        Simplifying the fundraising process for startups and investors.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-8">
+                <p class="text-base text-gray-400 text-center">
+                    © 2024 LinkFlow. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor CRM - LinkFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Update gradient styles */
+        .gradient-text {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Remove announcement banner styles as they're not used */
+        .announcement-banner,
+        .announcement-banner a,
+        .close-banner,
+        .close-banner:hover {
+            display: none;
+        }
+
+        /* Modern Logo Style */
+        .modern-logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-symbol {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            transform: rotate(-45deg);
+        }
+
+        .logo-symbol::before,
+        .logo-symbol::after {
+            content: '';
+            position: absolute;
+            background: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #22c55e, #0ea5e9) 1;
+            transition: all 0.4s ease;
+        }
+
+        .logo-symbol::before {
+            width: 16px;
+            height: 16px;
+            border-radius: 40% 60% 50% 50%;
+            top: 0;
+            left: 0;
+        }
+
+        .logo-symbol::after {
+            width: 12px;
+            height: 12px;
+            border-radius: 60% 40% 50% 50%;
+            bottom: 0;
+            right: 0;
+        }
+
+        .logo-text span {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(14, 165, 233, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Remove these font styles as we'll use the default ones from index page */
+        .hero-title {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            letter-spacing: inherit;
+        }
+
+        .hero-subtitle {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            font-weight: inherit;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
+                    </a>
+                    <div class="hidden md:flex ml-10 space-x-8">
+                        <a href="investor-crm.html" class="text-primary-600 font-medium">Investor CRM</a>
+                        <a href="qa-management.html" class="text-gray-500 hover:text-gray-900">Q&A Management</a>
+                        <a href="blog.html" class="text-gray-500 hover:text-gray-900">Blog</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Sign In</a>
+                    <a href="#" class="gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="pt-32 pb-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="text-left">
+                    <h1 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
+                        <span class="block">Transform investor relations</span>
+                        <span class="gradient-text block mt-2 text-[2.75rem] leading-tight">into sustainable growth</span>
+                    </h1>
+                    <p class="mt-4 text-base text-gray-500 sm:text-lg md:text-xl max-w-2xl">
+                        Automatically organize and optimize your investor relationships to build lasting partnerships 
+                        and drive successful fundraising rounds with our comprehensive CRM solution.
+                    </p>
+                    <div class="mt-8">
+                        <a href="#" class="gradient-bg text-white px-8 py-4 rounded-lg text-lg font-medium hover:opacity-90 transition-all inline-flex items-center space-x-2">
+                            <span>Get Started</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:block relative">
+                    <div class="relative h-[500px] w-full">
+                        <!-- Modern 3D CRM Dashboard Illustration -->
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 500 500" fill="none">
+                            <!-- 3D Platform Base -->
+                            <path d="M100 350 L400 350 L450 300 L150 300 Z" fill="url(#platform-gradient)" />
+                            
+                            <!-- Main Dashboard Panel -->
+                            <path d="M150 100 L400 150 L400 350 L150 300 Z" fill="url(#panel-gradient)" class="drop-shadow-2xl" />
+                            <path d="M400 150 L450 100 L450 300 L400 350 Z" fill="url(#side-gradient)" />
+                            
+                            <!-- Charts and Graphs -->
+                            <g transform="translate(180, 150) scale(0.8)">
+                                <!-- Bar Chart -->
+                                <rect x="20" y="80" width="30" height="100" fill="#22c55e" opacity="0.8" rx="4"/>
+                                <rect x="60" y="100" width="30" height="80" fill="#0ea5e9" opacity="0.8" rx="4"/>
+                                <rect x="100" y="60" width="30" height="120" fill="#22c55e" opacity="0.8" rx="4"/>
+                                <rect x="140" y="90" width="30" height="90" fill="#0ea5e9" opacity="0.8" rx="4"/>
+                                
+                                <!-- Line Chart -->
+                                <path d="M20 40 Q50 20, 80 45 T140 30" stroke="#22c55e" stroke-width="4" fill="none"/>
+                                <circle cx="20" cy="40" r="4" fill="#22c55e"/>
+                                <circle cx="80" cy="45" r="4" fill="#22c55e"/>
+                                <circle cx="140" cy="30" r="4" fill="#22c55e"/>
+                            </g>
+                            
+                            <!-- 3D Floating Elements -->
+                            <g transform="translate(300, 180) scale(0.6)">
+                                <!-- Floating Cards -->
+                                <rect x="0" y="0" width="100" height="60" fill="#ffffff" rx="8" transform="skew(-15 15)" class="drop-shadow-xl"/>
+                                <rect x="20" y="30" width="100" height="60" fill="#f0f9ff" rx="8" transform="skew(-15 15)" class="drop-shadow-xl"/>
+                                <rect x="40" y="60" width="100" height="60" fill="#e0f2fe" rx="8" transform="skew(-15 15)" class="drop-shadow-xl"/>
+                            </g>
+                            
+                            <!-- Decorative Elements -->
+                            <circle cx="180" cy="140" r="8" fill="#22c55e" opacity="0.6"/>
+                            <circle cx="380" cy="200" r="6" fill="#0ea5e9" opacity="0.6"/>
+                            <circle cx="280" cy="280" r="10" fill="#22c55e" opacity="0.6"/>
+                            
+                            <!-- Gradients -->
+                            <defs>
+                                <linearGradient id="platform-gradient" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#f0f9ff"/>
+                                    <stop offset="100%" stop-color="#e0f2fe"/>
+                                </linearGradient>
+                                <linearGradient id="panel-gradient" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="100%" stop-color="#f0f9ff"/>
+                                </linearGradient>
+                                <linearGradient id="side-gradient" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#e0f2fe"/>
+                                    <stop offset="100%" stop-color="#bae6fd"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Benefits Section -->
+    <div class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900">Why Choose LinkFlow CRM</h2>
+                <p class="mt-4 text-lg text-gray-500">Transform your investor relations with our powerful CRM tools</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="stat-card bg-white p-8 rounded-xl shadow-lg text-center">
+                    <div class="text-4xl font-bold text-primary-600 mb-2">40%</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Time Saved</h3>
+                    <p class="text-gray-500">Automate repetitive tasks and focus on building relationships</p>
+                </div>
+                <div class="stat-card bg-white p-8 rounded-xl shadow-lg text-center">
+                    <div class="text-4xl font-bold text-primary-600 mb-2">2x</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Engagement Rate</h3>
+                    <p class="text-gray-500">Improve investor engagement with targeted communications</p>
+                </div>
+                <div class="stat-card bg-white p-8 rounded-xl shadow-lg text-center">
+                    <div class="text-4xl font-bold text-primary-600 mb-2">100%</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Data Accuracy</h3>
+                    <p class="text-gray-500">Maintain precise records of all investor interactions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Features Section -->
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900">Core Features</h2>
+                <p class="mt-4 text-lg text-gray-500">Everything you need to manage investor relationships effectively</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="pipeline-management.html" class="feature-card block">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Pipeline Management</h3>
+                        <p class="text-gray-600 mb-4">Track investor stages from initial contact to commitment with customizable pipelines.</p>
+                        <ul class="space-y-2 text-gray-500">
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Customizable Pipeline Stages
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Deal Flow Tracking
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Progress Analytics
+                            </li>
+                        </ul>
+                        <div class="mt-6 text-primary-600 font-medium">Learn more →</div>
+                    </div>
+                </a>
+
+                <a href="meeting-tracker.html" class="feature-card block">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Meeting Tracker</h3>
+                        <p class="text-gray-600 mb-4">Schedule and manage investor meetings with automated reminders and note-taking.</p>
+                        <ul class="space-y-2 text-gray-500">
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Calendar Integration
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Smart Reminders
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Meeting Notes
+                            </li>
+                        </ul>
+                        <div class="mt-6 text-primary-600 font-medium">Learn more →</div>
+                    </div>
+                </a>
+
+                <a href="research-hub.html" class="feature-card block">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Research Hub</h3>
+                        <p class="text-gray-600 mb-4">Centralize investor research and market intelligence in one collaborative space.</p>
+                        <ul class="space-y-2 text-gray-500">
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Market Intelligence
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Investor Profiles
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="h-5 w-5 text-secondary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Competitive Analysis
+                            </li>
+                        </ul>
+                        <div class="mt-6 text-primary-600 font-medium">Learn more →</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Features -->
+    <div class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900">Additional Features</h2>
+                <p class="mt-4 text-lg text-gray-500">Powerful tools to enhance your investor relations</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Analytics Dashboard</h3>
+                    <p class="text-gray-600">Track key metrics and generate insights from your investor interactions.</p>
+                </div>
+
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Email Integration</h3>
+                    <p class="text-gray-600">Seamlessly sync your email communications with investor profiles.</p>
+                </div>
+
+                <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
+                    <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Data Security</h3>
+                    <p class="text-gray-600">Enterprise-grade security for your sensitive investor information.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Section -->
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900">What Our Users Say</h2>
+                <p class="mt-4 text-lg text-gray-500">Trusted by startups worldwide</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500"></div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-bold text-gray-900">Sarah Chen</h4>
+                            <p class="text-gray-500">CEO, TechVentures</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"LinkFlow has transformed how we manage our investor relationships. The pipeline management and meeting tracking features have saved us countless hours."</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-full bg-gradient-to-r from-secondary-500 to-primary-500"></div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-bold text-gray-900">Michael Rodriguez</h4>
+                            <p class="text-gray-500">Founder, GrowthLabs</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The analytics and reporting features have given us invaluable insights into our fundraising process. Highly recommended for any startup."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="px-6 py-12 md:p-12 text-center">
+                    <h2 class="text-3xl font-extrabold text-gray-900 md:text-4xl">
+                        Ready to Transform Your Investor Relations?
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-500 max-w-3xl mx-auto">
+                        Join thousands of startups using LinkFlow to manage their fundraising process more effectively.
+                    </p>
+                    <div class="mt-8 flex justify-center">
+                        <a href="#" class="gradient-bg text-white px-8 py-3 rounded-md text-lg font-medium hover:opacity-90">
+                            Get Started
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="index.html" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
+                    </a>
+                    <p class="mt-4 text-gray-500">
+                        Simplifying the fundraising process for startups and investors.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-8">
+                <p class="text-base text-gray-400 text-center">
+                    © 2024 LinkFlow. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

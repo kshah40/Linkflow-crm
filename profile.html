@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - LinkFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="./index.html" class="flex items-center">
+                            <svg class="h-8 w-8 text-primary-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="ml-2 text-2xl font-bold gradient-text">LinkFlow</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="handleLogout()" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white shadow rounded-lg">
+            <!-- Profile Header -->
+            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">User Profile</h3>
+                <p class="mt-1 text-sm text-gray-500">Manage your account information</p>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="px-4 py-5 sm:p-6">
+                <div class="space-y-6">
+                    <!-- Profile Picture -->
+                    <div class="flex items-center space-x-4">
+                        <div class="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center">
+                            <span id="profileInitials" class="text-2xl font-bold text-gray-600"></span>
+                        </div>
+                        <button onclick="handleAvatarUpload()" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            Change Photo
+                        </button>
+                    </div>
+
+                    <!-- Profile Form -->
+                    <form id="profileForm" class="space-y-6">
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" name="email" id="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm" readonly>
+                        </div>
+
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" name="fullName" id="fullName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label for="companyName" class="block text-sm font-medium text-gray-700">Company Name</label>
+                            <input type="text" name="companyName" id="companyName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="gradient-bg text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Change Password Section -->
+                    <div class="pt-6 border-t border-gray-200">
+                        <h4 class="text-lg font-medium text-gray-900">Change Password</h4>
+                        <form id="passwordForm" class="mt-4 space-y-4">
+                            <div>
+                                <label for="currentPassword" class="block text-sm font-medium text-gray-700">Current Password</label>
+                                <input type="password" name="currentPassword" id="currentPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                            </div>
+
+                            <div>
+                                <label for="newPassword" class="block text-sm font-medium text-gray-700">New Password</label>
+                                <input type="password" name="newPassword" id="newPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                            </div>
+
+                            <div>
+                                <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                                <input type="password" name="confirmPassword" id="confirmPassword" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                            </div>
+
+                            <div class="flex justify-end">
+                                <button type="submit" class="gradient-bg text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90">
+                                    Update Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://pqnntdsdtzgibqwuegwc.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxbm50ZHNkdHpnaWJxd3VlZ3djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE0NDc1MzcsImV4cCI6MjA1NzAyMzUzN30.Wj0xa2UmZolk079DFzrstsBGzOAfgVlUMHJKDEqn8Jk';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        // Check authentication status
+        async function checkAuth() {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = './login.html';
+                return null;
+            }
+            return session;
+        }
+
+        // Load user profile
+        async function loadProfile() {
+            const session = await checkAuth();
+            if (!session) return;
+
+            try {
+                // Get profile data
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', session.user.id)
+                    .single();
+
+                if (error) throw error;
+
+                // Fill form fields
+                document.getElementById('email').value = session.user.email;
+                document.getElementById('fullName').value = profile.full_name || '';
+                document.getElementById('companyName').value = profile.company_name || '';
+
+                // Set profile initials
+                const initials = (profile.full_name || '')
+                    .split(' ')
+                    .map(n => n[0])
+                    .join('')
+                    .toUpperCase();
+                document.getElementById('profileInitials').textContent = initials;
+            } catch (error) {
+                console.error('Error loading profile:', error.message);
+                alert('Error loading profile. Please try again.');
+            }
+        }
+
+        // Handle profile form submission
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const session = await checkAuth();
+            if (!session) return;
+
+            try {
+                const updates = {
+                    id: session.user.id,
+                    full_name: document.getElementById('fullName').value,
+                    company_name: document.getElementById('companyName').value,
+                    updated_at: new Date()
+                };
+
+                const { error } = await supabase
+                    .from('profiles')
+                    .upsert(updates);
+
+                if (error) throw error;
+                alert('Profile updated successfully!');
+                loadProfile(); // Reload profile data
+            } catch (error) {
+                console.error('Error updating profile:', error.message);
+                alert('Error updating profile. Please try again.');
+            }
+        });
+
+        // Handle password form submission
+        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const session = await checkAuth();
+            if (!session) return;
+
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match');
+                return;
+            }
+
+            try {
+                const { error } = await supabase.auth.updateUser({
+                    password: newPassword
+                });
+
+                if (error) throw error;
+                alert('Password updated successfully!');
+                document.getElementById('passwordForm').reset();
+            } catch (error) {
+                console.error('Error updating password:', error.message);
+                alert('Error updating password. Please try again.');
+            }
+        });
+
+        // Handle logout
+        async function handleLogout() {
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
+                window.location.href = './login.html';
+            } catch (error) {
+                console.error('Error logging out:', error.message);
+                alert('Error logging out. Please try again.');
+            }
+        }
+
+        // Handle avatar upload
+        async function handleAvatarUpload() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                const session = await checkAuth();
+                if (!session) return;
+
+                try {
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `${session.user.id}.${fileExt}`;
+                    const { error: uploadError } = await supabase.storage
+                        .from('avatars')
+                        .upload(fileName, file, { upsert: true });
+
+                    if (uploadError) throw uploadError;
+
+                    const { data: { publicUrl }, error: urlError } = await supabase.storage
+                        .from('avatars')
+                        .getPublicUrl(fileName);
+
+                    if (urlError) throw urlError;
+
+                    const { error: updateError } = await supabase
+                        .from('profiles')
+                        .update({ avatar_url: publicUrl })
+                        .eq('id', session.user.id);
+
+                    if (updateError) throw updateError;
+
+                    alert('Avatar updated successfully!');
+                    loadProfile(); // Reload profile data
+                } catch (error) {
+                    console.error('Error uploading avatar:', error.message);
+                    alert('Error uploading avatar. Please try again.');
+                }
+            };
+            input.click();
+        }
+
+        // Load profile on page load
+        loadProfile();
+    </script>
+</body>
+</html> 

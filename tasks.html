@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks - LinkFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .task-card {
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation (same as dashboard) -->
+    <nav class="bg-white shadow-sm">
+        <!-- ... (copy navigation from dashboard.html) ... -->
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="md:flex md:items-center md:justify-between">
+            <div class="flex-1 min-w-0">
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+                    Tasks
+                </h2>
+            </div>
+            <div class="mt-4 flex md:mt-0 md:ml-4">
+                <button type="button" onclick="showNewTaskModal()" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white gradient-bg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                    New Task
+                </button>
+            </div>
+        </div>
+
+        <!-- Task Filters -->
+        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-4">
+            <div>
+                <label for="project" class="block text-sm font-medium text-gray-700">Project</label>
+                <select id="project" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                    <option value="all">All Projects</option>
+                </select>
+            </div>
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                <select id="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <div>
+                <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                <select id="priority" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                    <option value="all">All Priority</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <div>
+                <label for="search" class="block text-sm font-medium text-gray-700">Search</label>
+                <input type="text" id="search" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 sm:text-sm" placeholder="Search tasks...">
+            </div>
+        </div>
+
+        <!-- Tasks List -->
+        <div class="mt-8">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" id="tasks-grid">
+                <!-- Tasks will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- New Task Modal -->
+        <div id="new-task-modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                    <div>
+                        <div class="mt-3 text-center sm:mt-5">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                Create New Task
+                            </h3>
+                            <div class="mt-2">
+                                <form id="new-task-form">
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="task-title" class="block text-sm font-medium text-gray-700">Task Title</label>
+                                            <input type="text" name="task-title" id="task-title" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm" required>
+                                        </div>
+                                        <div>
+                                            <label for="task-description" class="block text-sm font-medium text-gray-700">Description</label>
+                                            <textarea id="task-description" name="task-description" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm"></textarea>
+                                        </div>
+                                        <div>
+                                            <label for="task-project" class="block text-sm font-medium text-gray-700">Project</label>
+                                            <select id="task-project" name="task-project" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md" required>
+                                                <!-- Projects will be dynamically added here -->
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="task-priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                                            <select id="task-priority" name="task-priority" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
+                                                <option value="low">Low</option>
+                                                <option value="medium" selected>Medium</option>
+                                                <option value="high">High</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label for="task-due-date" class="block text-sm font-medium text-gray-700">Due Date</label>
+                                            <input type="date" id="task-due-date" name="task-due-date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                        <button type="button" onclick="createTask()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 gradient-bg text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:col-start-2 sm:text-sm">
+                            Create
+                        </button>
+                        <button type="button" onclick="hideNewTaskModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:col-start-1 sm:text-sm">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://pqnntdsdtzgibqwuegwc.supabase.co'
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxbm50ZHNkdHpnaWJxd3VlZ3djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE0NDc1MzcsImV4cCI6MjA1NzAyMzUzN30.Wj0xa2UmZolk079DFzrstsBGzOAfgVlUMHJKDEqn8Jk'
+        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey)
+
+        // Check authentication
+        async function checkAuth() {
+            const { data: { session }, error } = await supabase.auth.getSession()
+            if (!session) {
+                window.location.href = '/login.html'
+            }
+            return session
+        }
+
+        // Load projects for filters and new task form
+        async function loadProjects() {
+            const { data: projects, error } = await supabase
+                .from('projects')
+                .select('*')
+                .order('name')
+
+            if (error) {
+                console.error('Error loading projects:', error)
+                return
+            }
+
+            const projectSelect = document.getElementById('project')
+            const taskProjectSelect = document.getElementById('task-project')
+            
+            projects.forEach(project => {
+                const option = new Option(project.name, project.id)
+                const taskOption = new Option(project.name, project.id)
+                projectSelect.add(option)
+                taskProjectSelect.add(taskOption)
+            })
+        }
+
+        // Load tasks
+        async function loadTasks() {
+            const projectFilter = document.getElementById('project').value
+            const statusFilter = document.getElementById('status').value
+            const priorityFilter = document.getElementById('priority').value
+            const searchQuery = document.getElementById('search').value.toLowerCase()
+
+            let query = supabase
+                .from('tasks')
+                .select(`
+                    *,
+                    project:projects(name),
+                    assignee:profiles(email)
+                `)
+                .order('created_at', { ascending: false })
+
+            if (projectFilter !== 'all') {
+                query = query.eq('project_id', projectFilter)
+            }
+            if (statusFilter !== 'all') {
+                query = query.eq('status', statusFilter)
+            }
+            if (priorityFilter !== 'all') {
+                query = query.eq('priority', priorityFilter)
+            }
+
+            const { data: tasks, error } = await query
+
+            if (error) {
+                console.error('Error loading tasks:', error)
+                return
+            }
+
+            const grid = document.getElementById('tasks-grid')
+            grid.innerHTML = ''
+
+            const filteredTasks = searchQuery
+                ? tasks.filter(task => 
+                    task.title.toLowerCase().includes(searchQuery) ||
+                    task.description?.toLowerCase().includes(searchQuery))
+                : tasks
+
+            filteredTasks.forEach(task => {
+                const card = document.createElement('div')
+                card.className = 'task-card bg-white overflow-hidden shadow rounded-lg'
+                card.innerHTML = `
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-medium text-gray-900">${task.title}</h3>
+                                <p class="mt-1 text-sm text-gray-500">${task.description || 'No description'}</p>
+                            </div>
+                            <div class="ml-4">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    ${task.priority === 'high' ? 'bg-red-100 text-red-800' : 
+                                    task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 
+                                    'bg-green-100 text-green-800'}">
+                                    ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center">
+                                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                    </svg>
+                                    <span class="ml-1 text-gray-500">${task.project.name}</span>
+                                </div>
+                                <div>
+                                    ${task.due_date ? `
+                                        <time datetime="${task.due_date}" class="text-gray-500">
+                                            Due: ${new Date(task.due_date).toLocaleDateString()}
+                                        </time>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="h-6 w-6 rounded-full" src="https://ui-avatars.com/api/?name=${task.assignee?.email || 'Unassigned'}" alt="">
+                                    <span class="ml-2 text-sm text-gray-500">${task.assignee?.email || 'Unassigned'}</span>
+                                </div>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                    ${task.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                    task.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
+                                    'bg-gray-100 text-gray-800'}">
+                                    ${task.status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `
+                grid.appendChild(card)
+            })
+        }
+
+        // Show/hide new task modal
+        function showNewTaskModal() {
+            document.getElementById('new-task-modal').classList.remove('hidden')
+        }
+
+        function hideNewTaskModal() {
+            document.getElementById('new-task-modal').classList.add('hidden')
+        }
+
+        // Create new task
+        async function createTask() {
+            const session = await checkAuth()
+            
+            const title = document.getElementById('task-title').value
+            const description = document.getElementById('task-description').value
+            const projectId = document.getElementById('task-project').value
+            const priority = document.getElementById('task-priority').value
+            const dueDate = document.getElementById('task-due-date').value
+
+            const { data, error } = await supabase
+                .from('tasks')
+                .insert([
+                    {
+                        title,
+                        description,
+                        project_id: projectId,
+                        priority,
+                        due_date: dueDate,
+                        status: 'pending',
+                        assignee_id: session.user.id
+                    }
+                ])
+
+            if (error) {
+                console.error('Error creating task:', error)
+                return
+            }
+
+            hideNewTaskModal()
+            loadTasks()
+        }
+
+        // Initialize page
+        window.addEventListener('load', async () => {
+            await checkAuth()
+            await loadProjects()
+            await loadTasks()
+
+            // Handle filters
+            document.getElementById('project').addEventListener('change', loadTasks)
+            document.getElementById('status').addEventListener('change', loadTasks)
+            document.getElementById('priority').addEventListener('change', loadTasks)
+
+            // Handle search
+            let searchTimeout
+            document.getElementById('search').addEventListener('input', (e) => {
+                clearTimeout(searchTimeout)
+                searchTimeout = setTimeout(loadTasks, 300)
+            })
+        })
+    </script>
+</body>
+</html> 

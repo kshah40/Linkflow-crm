@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - LinkFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(92deg, #22c55e -30%, #0ea5e9 60%, #22c55e 140%);
+            background-size: 200% auto;
+            animation: shine 8s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Modern Logo Style */
+        .modern-logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-symbol {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            transform: rotate(-45deg);
+        }
+
+        .logo-symbol::before,
+        .logo-symbol::after {
+            content: '';
+            position: absolute;
+            background: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #22c55e, #0ea5e9) 1;
+            transition: all 0.4s ease;
+        }
+
+        .logo-symbol::before {
+            width: 16px;
+            height: 16px;
+            border-radius: 40% 60% 50% 50%;
+            top: 0;
+            left: 0;
+        }
+
+        .logo-symbol::after {
+            width: 12px;
+            height: 12px;
+            border-radius: 60% 40% 50% 50%;
+            bottom: 0;
+            right: 0;
+        }
+
+        .logo-text span {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .blog-card {
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
+                    </a>
+                    <div class="hidden md:flex ml-10 space-x-8">
+                        <a href="investor-crm.html" class="text-gray-500 hover:text-gray-900">Investor CRM</a>
+                        <a href="qa-management.html" class="text-gray-500 hover:text-gray-900">Q&A Management</a>
+                        <a href="blog.html" class="text-primary-600 font-medium">Blog</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Sign In</a>
+                    <a href="#" class="gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="pt-32 pb-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="text-left">
+                    <h1 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl md:text-5xl">
+                        <span class="block">Insights for</span>
+                        <span class="gradient-text block mt-2 text-[2.75rem] leading-tight">fundraising success</span>
+                    </h1>
+                    <p class="mt-4 text-base text-gray-500 sm:text-lg md:text-xl max-w-2xl">
+                        Expert advice, industry trends, and practical tips to help you navigate 
+                        the fundraising landscape and build stronger investor relationships.
+                    </p>
+                    <div class="mt-8">
+                        <a href="#featured-article" class="gradient-bg text-white px-8 py-4 rounded-lg text-lg font-medium hover:opacity-90 transition-all inline-flex items-center space-x-2">
+                            <span>Read Latest</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:block relative">
+                    <div class="relative h-[500px] w-full">
+                        <!-- Modern 3D Blog Illustration -->
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 500 500" fill="none">
+                            <!-- 3D Platform Base -->
+                            <path d="M100 350 L400 350 L450 300 L150 300 Z" fill="url(#platform-gradient)" />
+                            
+                            <!-- Main Blog Panel -->
+                            <path d="M150 100 L400 150 L400 350 L150 300 Z" fill="url(#panel-gradient)" class="drop-shadow-2xl" />
+                            <path d="M400 150 L450 100 L450 300 L400 350 Z" fill="url(#side-gradient)" />
+                            
+                            <!-- Blog Content Elements -->
+                            <g transform="translate(180, 150) scale(0.9)">
+                                <!-- Article Cards -->
+                                <rect x="20" y="20" width="200" height="80" fill="#ffffff" rx="8" transform="skew(-10 5)" class="drop-shadow-lg"/>
+                                <rect x="40" y="120" width="200" height="80" fill="#f0f9ff" rx="8" transform="skew(-10 5)" class="drop-shadow-lg"/>
+                                <rect x="60" y="220" width="200" height="80" fill="#f0fdf4" rx="8" transform="skew(-10 5)" class="drop-shadow-lg"/>
+                                
+                                <!-- Text Lines -->
+                                <rect x="40" y="40" width="120" height="8" fill="#0ea5e9" rx="4" transform="skew(-10 5)"/>
+                                <rect x="40" y="60" width="160" height="6" fill="#e0f2fe" rx="3" transform="skew(-10 5)"/>
+                                
+                                <rect x="60" y="140" width="120" height="8" fill="#22c55e" rx="4" transform="skew(-10 5)"/>
+                                <rect x="60" y="160" width="160" height="6" fill="#dcfce7" rx="3" transform="skew(-10 5)"/>
+                                
+                                <rect x="80" y="240" width="120" height="8" fill="#0ea5e9" rx="4" transform="skew(-10 5)"/>
+                                <rect x="80" y="260" width="160" height="6" fill="#e0f2fe" rx="3" transform="skew(-10 5)"/>
+                            </g>
+                            
+                            <!-- Floating Elements -->
+                            <circle cx="180" cy="140" r="8" fill="#22c55e" opacity="0.6"/>
+                            <circle cx="380" cy="200" r="6" fill="#0ea5e9" opacity="0.6"/>
+                            <circle cx="280" cy="280" r="10" fill="#22c55e" opacity="0.6"/>
+                            
+                            <!-- Gradients -->
+                            <defs>
+                                <linearGradient id="platform-gradient" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#f0f9ff"/>
+                                    <stop offset="100%" stop-color="#e0f2fe"/>
+                                </linearGradient>
+                                <linearGradient id="panel-gradient" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="100%" stop-color="#f0f9ff"/>
+                                </linearGradient>
+                                <linearGradient id="side-gradient" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#e0f2fe"/>
+                                    <stop offset="100%" stop-color="#bae6fd"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Article -->
+    <div class="py-12" id="featured-article">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="relative h-64 lg:h-auto">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="AI in Investor Relations" 
+                             class="absolute inset-0 w-full h-full object-cover"/>
+                    </div>
+                    <div class="p-8 lg:p-12">
+                        <div class="text-sm text-primary-600 font-semibold">Featured Article</div>
+                        <h2 class="mt-2 text-3xl font-bold text-gray-900">
+                            <a href="blog/ai-in-investor-relations.html" class="hover:text-primary-600">
+                                The Rise of AI in Investor Relations
+                            </a>
+                        </h2>
+                        <p class="mt-4 text-gray-600">How artificial intelligence is transforming the way startups interact with investors and manage relationships.</p>
+                        <div class="mt-6 flex items-center">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+                                 alt="Author" 
+                                 class="h-10 w-10 rounded-full"/>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Alex Thompson</p>
+                                <p class="text-sm text-gray-500">10 min read • Mar 15, 2024</p>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <a href="blog/ai-in-investor-relations.html" class="text-primary-600 font-medium hover:text-primary-700">
+                                Read full article →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Latest Articles -->
+    <div class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Latest Articles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <article class="blog-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <a href="blog/fundraising-strategies-2024.html">
+                        <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Fundraising Strategies" 
+                             class="w-full h-48 object-cover"/>
+                        <div class="p-6">
+                            <div class="text-sm text-primary-600 font-semibold mb-2">Fundraising</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Top Fundraising Strategies for 2024</h3>
+                            <p class="text-gray-600 mb-4">Expert insights on the most effective fundraising approaches in today's market.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>8 min read</span>
+                                <span class="mx-2">•</span>
+                                <span>Mar 12, 2024</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="blog-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <a href="blog/pitch-deck-design.html">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Pitch Deck Design" 
+                             class="w-full h-48 object-cover"/>
+                        <div class="p-6">
+                            <div class="text-sm text-primary-600 font-semibold mb-2">Pitch Decks</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Creating a Compelling Pitch Deck</h3>
+                            <p class="text-gray-600 mb-4">Learn the essential elements of a pitch deck that captures investor attention.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>6 min read</span>
+                                <span class="mx-2">•</span>
+                                <span>Mar 10, 2024</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="blog-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <a href="blog/investor-relationships.html">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Investor Relations" 
+                             class="w-full h-48 object-cover"/>
+                        <div class="p-6">
+                            <div class="text-sm text-primary-600 font-semibold mb-2">Investor Relations</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Building Long-term Investor Relationships</h3>
+                            <p class="text-gray-600 mb-4">Strategies for maintaining strong relationships with your investors.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>7 min read</span>
+                                <span class="mx-2">•</span>
+                                <span>Mar 8, 2024</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Categories</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="blog/category/fundraising.html" class="p-6 bg-white rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
+                    <h3 class="text-lg font-semibold text-gray-900">Fundraising</h3>
+                    <p class="text-gray-500 mt-2">12 articles</p>
+                </a>
+                <a href="blog/category/pitch-decks.html" class="p-6 bg-white rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
+                    <h3 class="text-lg font-semibold text-gray-900">Pitch Decks</h3>
+                    <p class="text-gray-500 mt-2">8 articles</p>
+                </a>
+                <a href="blog/category/investor-relations.html" class="p-6 bg-white rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
+                    <h3 class="text-lg font-semibold text-gray-900">Investor Relations</h3>
+                    <p class="text-gray-500 mt-2">15 articles</p>
+                </a>
+                <a href="blog/category/market-trends.html" class="p-6 bg-white rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
+                    <h3 class="text-lg font-semibold text-gray-900">Market Trends</h3>
+                    <p class="text-gray-500 mt-2">10 articles</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <div class="text-center max-w-2xl mx-auto">
+                    <h2 class="text-3xl font-bold text-gray-900">Stay Updated</h2>
+                    <p class="mt-4 text-gray-600">Get the latest insights and tips delivered straight to your inbox.</p>
+                    <form class="mt-8">
+                        <div class="flex gap-4">
+                            <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <button type="submit" class="gradient-bg text-white px-6 py-3 rounded-lg font-medium hover:opacity-90">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="index.html" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
+                    </a>
+                    <p class="mt-4 text-gray-500">
+                        Simplifying the fundraising process for startups and investors.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-8">
+                <p class="text-base text-gray-400 text-center">
+                    © 2024 LinkFlow. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
