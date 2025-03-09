@@ -40,10 +40,26 @@
       "dest": "/projects.html"
     },
     {
+      "src": "/smart-templates",
+      "dest": "/smart-templates.html"
+    },
+    {
+      "src": "/pipeline-management",
+      "dest": "/pipeline-management.html"
+    },
+    {
+      "src": "/meeting-tracker",
+      "dest": "/meeting-tracker.html"
+    },
+    {
+      "src": "/integrated-information",
+      "dest": "/integrated-information.html"
+    },
+    {
       "handle": "filesystem"
     },
     {
-      "src": "/(.*)",
+      "src": "/",
       "dest": "/index.html"
     }
   ]
