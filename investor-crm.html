@@ -191,22 +191,53 @@
                             <span>LinkFlow</span>
                         </div>
                     </a>
+                    <!-- Mobile menu button -->
+                    <div class="sm:hidden ml-4">
+                        <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                    </div>
                     <div class="hidden md:flex ml-10 space-x-8">
                         <a href="investor-crm.html" class="text-primary-600 font-medium">Investor CRM</a>
                         <a href="qa-management.html" class="text-gray-500 hover:text-gray-900">Q&A Management</a>
                         <a href="blog.html" class="text-gray-500 hover:text-gray-900">Blog</a>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
+                <div class="hidden sm:flex sm:items-center space-x-4">
                     <a href="/login" class="text-gray-600 hover:text-gray-900">Sign In</a>
                     <a href="/login?signup=true" class="gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90">Get Started</a>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div class="sm:hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/investor-crm" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                    Investor CRM
+                </a>
+                <a href="/qa-management" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                    Q&A Management
+                </a>
+                <a href="/blog" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                    Blog
+                </a>
+                <div class="pt-4 pb-3 border-t border-gray-200">
+                    <a href="/login" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                        Sign In
+                    </a>
+                    <a href="/login?signup=true" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
+                        Get Started
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="pt-16">
+    <main class="pt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <!-- Hero Section -->
             <div class="text-center mb-12">
@@ -288,5 +319,20 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Initially hide the menu
+            mobileMenu.classList.add('hidden');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
 </body>
 </html> 
