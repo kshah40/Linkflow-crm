@@ -235,8 +235,8 @@
         </div>
 
         <!-- Mobile navigation menu -->
-        <div id="mobile-menu" class="hidden sm:hidden fixed top-16 right-0 bottom-0 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out">
-            <div class="pt-2 pb-3 space-y-1 border-t border-gray-200">
+        <div id="mobile-menu" class="hidden sm:hidden absolute top-16 left-0 right-0 bg-white shadow-lg">
+            <div class="pt-2 pb-3 space-y-1">
                 <a href="/investor-crm" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Investor CRM</a>
                 <a href="/qa-management" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Q&A Management</a>
                 <a href="/blog" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Blog</a>
@@ -359,19 +359,7 @@
 
             mobileMenuButton.addEventListener('click', function() {
                 isMenuOpen = !isMenuOpen;
-                if (isMenuOpen) {
-                    mobileMenu.classList.remove('hidden');
-                    mobileMenu.classList.add('translate-x-0');
-                    mobileMenu.classList.remove('translate-x-full');
-                } else {
-                    mobileMenu.classList.add('translate-x-full');
-                    mobileMenu.classList.remove('translate-x-0');
-                    setTimeout(() => {
-                        if (!isMenuOpen) {
-                            mobileMenu.classList.add('hidden');
-                        }
-                    }, 300);
-                }
+                mobileMenu.classList.toggle('hidden');
 
                 // Update button icon
                 const svg = this.querySelector('svg');
@@ -387,13 +375,7 @@
                 const isClickInside = mobileMenuButton.contains(event.target) || mobileMenu.contains(event.target);
                 if (!isClickInside && isMenuOpen) {
                     isMenuOpen = false;
-                    mobileMenu.classList.add('translate-x-full');
-                    mobileMenu.classList.remove('translate-x-0');
-                    setTimeout(() => {
-                        if (!isMenuOpen) {
-                            mobileMenu.classList.add('hidden');
-                        }
-                    }, 300);
+                    mobileMenu.classList.add('hidden');
                     
                     // Reset button icon
                     const svg = mobileMenuButton.querySelector('svg');
