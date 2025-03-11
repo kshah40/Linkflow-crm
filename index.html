@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinkFlow - Fundraising Process Made Simplified</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -205,9 +206,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/" class="flex items-center">
-                        <img src="https://raw.githubusercontent.com/kshah40/linkflow-crm/main/public/images/modern-logo.png" alt="LinkFlow Logo" class="h-12">
-                        <span class="text-4xl font-bold text-gray-900 ml-2">LinkFlow</span>
+                    <a href="/" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
                     </a>
                 </div>
 
@@ -223,20 +228,17 @@
 
                 <!-- Desktop navigation -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6 sm:space-x-8">
-                    <a href="/investor-crm" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    <a href="/investor-crm.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Investor CRM
                     </a>
-                    <a href="/qa-management" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    <a href="/qa-dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Q&A Management
                     </a>
-                    <a href="/blog" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        Blog
-                    </a>
                     <div class="flex items-center space-x-4">
-                        <a href="/login" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="/login.html" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                             Sign In
                         </a>
-                        <a href="/login?signup=true" class="text-white gradient-bg hover:opacity-90 px-4 py-2 rounded-md text-sm font-medium">
+                        <a href="/login.html?signup=true" class="text-white gradient-bg hover:opacity-90 px-4 py-2 rounded-md text-sm font-medium">
                             Get Started
                         </a>
                     </div>
@@ -247,11 +249,10 @@
         <!-- Mobile navigation menu -->
         <div id="mobile-menu" class="hidden sm:hidden absolute top-16 left-0 right-0 bg-white shadow-lg">
             <div class="pt-2 pb-3 space-y-1">
-                <a href="/investor-crm" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Investor CRM</a>
-                <a href="/qa-management" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Q&A Management</a>
-                <a href="/blog" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Blog</a>
-                <a href="/login" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Sign In</a>
-                <a href="/login?signup=true" class="block px-4 py-2 text-base font-medium bg-primary-600 text-white hover:bg-primary-700">Get Started</a>
+                <a href="/investor-crm.html" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Investor CRM</a>
+                <a href="/qa-dashboard.html" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Q&A Management</a>
+                <a href="/login.html" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Sign In</a>
+                <a href="/login.html?signup=true" class="block px-4 py-2 text-base font-medium bg-primary-600 text-white hover:bg-primary-700">Get Started</a>
             </div>
         </div>
     </nav>
@@ -259,239 +260,72 @@
     <!-- Hero Section -->
     <div class="relative pt-32 pb-16 sm:pt-40 sm:pb-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                    <span>Fundraising Process</span>
-                    <br />
-                    <span class="text-[#0ea5e9]">Made Simplified</span>
-                </h1>
-                <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-                    Transform your fundraising journey with our comprehensive platform. Manage investor relationships and organize your startup's story all in one place.
-                </p>
-                <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-                    <div class="rounded-md shadow">
-                        <a href="./login.html?signup=true" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white gradient-bg hover:opacity-90 md:py-4 md:text-lg md:px-10">
-                            Get Started
-                        </a>
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+                    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                        <span>Fundraising Process</span>
+                        <br />
+                        <span class="text-[#0ea5e9]">Made Simplified</span>
+                    </h1>
+                    <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                        Transform your fundraising journey with our comprehensive platform. Manage investor relationships and organize your startup's story all in one place.
+                    </p>
+                    <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                        <div class="rounded-md shadow">
+                            <a href="/login.html?signup=true" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white gradient-bg hover:opacity-90 md:py-4 md:text-lg md:px-10">
+                                Get Started
+                            </a>
+                        </div>
+                        <div class="mt-3 sm:mt-0 sm:ml-3">
+                            <a href="#features" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-gray-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10">
+                                Learn More
+                            </a>
+                        </div>
                     </div>
-                    <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-                        <a href="#features" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-gray-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10">
-                            Learn More
-                        </a>
+                </div>
+                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+                    <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                        <div class="relative block w-full bg-white rounded-lg overflow-hidden">
+                            <img class="w-full animate-float" src="https://raw.githubusercontent.com/kshah40/linkflow-crm/main/public/images/hero-illustration.svg" alt="Fundraising Illustration">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Core Features Section -->
-    <div class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="text-base gradient-text font-semibold tracking-wide uppercase">Core Features</h2>
-                <p class="mt-2 text-3xl font-extrabold gradient-text sm:text-4xl">
-                    Everything you need to succeed
-                </p>
-            </div>
-
-            <!-- Investor CRM Section -->
-            <div class="mt-16">
-                <div class="text-center mb-12">
-                    <h3 class="text-2xl font-bold text-gray-900">Investor CRM</h3>
-                    <p class="mt-4 text-lg text-gray-500 max-w-3xl mx-auto">
-                        Streamline your investor relations with our comprehensive CRM tools designed specifically for fundraising.
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Pipeline Management -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">Pipeline Management</h4>
-                        <p class="mt-2 text-gray-500">Track investor stages from initial contact to commitment with customizable pipelines.</p>
-                    </div>
-
-                    <!-- Meeting Tracker -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">Meeting Tracker</h4>
-                        <p class="mt-2 text-gray-500">Schedule and track meetings, set reminders, and log conversation notes automatically.</p>
-                    </div>
-
-                    <!-- Research Hub -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">Research Hub</h4>
-                        <p class="mt-2 text-gray-500">Centralize investor research, preferences, and investment history in one place.</p>
-                    </div>
-
-                    <!-- Communication Center -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">Communication Center</h4>
-                        <p class="mt-2 text-gray-500">Manage all investor communications and follow-ups from a unified dashboard.</p>
-                    </div>
-                </div>
-                <div class="text-center mt-8">
-                    <a href="/investor-crm" class="text-primary-600 font-medium hover:text-primary-700">Learn more about Investor CRM →</a>
-                </div>
-            </div>
-
-            <!-- Q&A Management Section -->
-            <div class="mt-24">
-                <div class="text-center mb-12">
-                    <h3 class="text-2xl font-bold text-gray-900">Q&A Management</h3>
-                    <p class="mt-4 text-lg text-gray-500 max-w-3xl mx-auto">
-                        Organize and share your startup's story effectively with our comprehensive Q&A tools.
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Integrated Information -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">Integrated Information</h4>
-                        <p class="mt-2 text-gray-500">Centralize all startup information in an organized, easily accessible format.</p>
-                    </div>
-
-                    <!-- One-Click Share -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">One-Click Share</h4>
-                        <p class="mt-2 text-gray-500">Share tailored information packages with investors instantly and securely.</p>
-                    </div>
-
-                    <!-- Smart Templates -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">Smart Templates</h4>
-                        <p class="mt-2 text-gray-500">Pre-built templates for common investor questions and due diligence requests.</p>
-                    </div>
-
-                    <!-- Analytics Dashboard -->
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg">
-                        <div class="feature-icon w-12 h-12 gradient-bg rounded-full flex items-center justify-center mb-4">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-gray-900">Analytics Dashboard</h4>
-                        <p class="mt-2 text-gray-500">Track engagement metrics and optimize your information sharing strategy.</p>
-                    </div>
-                </div>
-                <div class="text-center mt-8">
-                    <a href="/qa-management" class="text-primary-600 font-medium hover:text-primary-700">Learn more about Q&A Management →</a>
-                </div>
-            </div>
+    <!-- Auth Check Overlay -->
+    <div id="auth-check-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent mx-auto mb-4"></div>
+            <p class="text-gray-700">Checking authentication...</p>
         </div>
     </div>
 
-    <!-- CTA Section -->
-    <div class="py-12 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <div class="px-6 py-12 md:p-12 text-center">
-                    <h2 class="text-3xl font-extrabold text-gray-900 md:text-4xl">
-                        Ready to Transform Your Investor Relations?
-                    </h2>
-                    <p class="mt-4 text-lg text-gray-500 max-w-3xl mx-auto">
-                        Join thousands of startups using LinkFlow to manage their fundraising process more effectively.
-                    </p>
-                    <div class="mt-8 flex justify-center">
-                        <a href="/login?signup=true" class="gradient-bg text-white px-8 py-3 rounded-md text-lg font-medium hover:opacity-90">
-                            Get Started
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script type="module">
+        import { getCurrentUser } from './auth.js';
 
-    <!-- Footer -->
-    <footer class="bg-white">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-1 md:col-span-2">
-                    <a href="/" class="modern-logo">
-                        <div class="logo-icon">
-                            <div class="logo-symbol"></div>
-                        </div>
-                        <div class="logo-text">
-                            <span>LinkFlow</span>
-                        </div>
-                    </a>
-                    <p class="mt-4 text-gray-500">
-                        Simplifying the fundraising process for startups and investors.
-                    </p>
-                </div>
-            </div>
-            <div class="mt-8 border-t border-gray-200 pt-8">
-                <p class="text-base text-gray-400 text-center">
-                    © 2024 LinkFlow. All rights reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
+        // Check authentication on page load
+        async function checkAuth() {
+            const user = await getCurrentUser();
+            if (user) {
+                window.location.href = '/dashboard.html';
+                return;
+            }
+            
+            document.getElementById('auth-check-overlay').classList.add('hidden');
+        }
 
-    <script>
-        // Mobile menu toggle functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            let isMenuOpen = false;
-
-            mobileMenuButton.addEventListener('click', function() {
-                isMenuOpen = !isMenuOpen;
-                mobileMenu.classList.toggle('hidden');
-
-                // Update button icon
-                const svg = this.querySelector('svg');
-                if (isMenuOpen) {
-                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
-                } else {
-                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
-                }
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
-                const isClickInside = mobileMenuButton.contains(event.target) || mobileMenu.contains(event.target);
-                if (!isClickInside && isMenuOpen) {
-                    isMenuOpen = false;
-                    mobileMenu.classList.add('hidden');
-                    
-                    // Reset button icon
-                    const svg = mobileMenuButton.querySelector('svg');
-                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
-                }
-            });
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
+
+        // Initialize page
+        checkAuth();
     </script>
 </body>
 </html> 

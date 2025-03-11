@@ -6,6 +6,29 @@
     <title>Dashboard - LinkFlow</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         /* Base styles */
         .gradient-text {
@@ -26,6 +49,65 @@
             to {
                 background-position: 200% center;
             }
+        }
+
+        /* Modern Logo Style */
+        .modern-logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-center: center;
+        }
+
+        .logo-symbol {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            transform: rotate(-45deg);
+        }
+
+        .logo-symbol::before,
+        .logo-symbol::after {
+            content: '';
+            position: absolute;
+            background: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #22c55e, #0ea5e9) 1;
+            transition: all 0.4s ease;
+        }
+
+        .logo-symbol::before {
+            width: 16px;
+            height: 16px;
+            border-radius: 40% 60% 50% 50%;
+            top: 0;
+            left: 0;
+        }
+
+        .logo-symbol::after {
+            width: 12px;
+            height: 12px;
+            border-radius: 60% 40% 50% 50%;
+            bottom: 0;
+            right: 0;
+        }
+
+        .logo-text span {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
         /* Sidebar styles */
@@ -138,197 +220,208 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="min-h-screen flex">
-        <!-- Sidebar -->
-        <aside class="sidebar bg-white shadow-lg flex flex-col min-h-screen" id="sidebar">
-            <!-- Toggle Button -->
-            <button class="sidebar-toggle" id="sidebar-toggle">
-                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
+    <!-- Auth Check Overlay -->
+    <div id="auth-check-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent mx-auto mb-4"></div>
+            <p class="text-gray-700">Checking authentication...</p>
+        </div>
+    </div>
 
-            <!-- Logo Section -->
-            <div class="px-4 py-5 border-b border-gray-200">
-                <a href="#" class="flex items-center">
-                    <svg class="h-8 w-8 text-primary-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Main Content (initially hidden) -->
+    <div id="main-content" class="hidden">
+        <div class="min-h-screen flex">
+            <!-- Sidebar -->
+            <aside class="sidebar bg-white shadow-lg flex flex-col min-h-screen" id="sidebar">
+                <!-- Toggle Button -->
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
-                    <span class="sidebar-text ml-2 text-xl font-bold gradient-text">LinkFlow</span>
-                </a>
-            </div>
+                </button>
 
-            <!-- Navigation -->
-            <nav class="flex-1 overflow-y-auto py-4">
-                <div class="px-3 space-y-1">
-                    <!-- Dashboard -->
-                    <a href="#dashboard" class="sidebar-item active">
-                        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                        </svg>
-                        <span class="sidebar-text">Dashboard</span>
+                <!-- Logo Section -->
+                <div class="px-4 py-5 border-b border-gray-200">
+                    <a href="#" class="modern-logo">
+                        <div class="logo-icon">
+                            <div class="logo-symbol"></div>
+                        </div>
+                        <div class="logo-text">
+                            <span>LinkFlow</span>
+                        </div>
                     </a>
-
-                    <!-- Investor CRM Section -->
-                    <div class="space-y-1">
-                        <button class="sidebar-item w-full" data-dropdown="investor-crm">
-                            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            <span class="sidebar-text">Investor CRM</span>
-                            <svg class="w-4 h-4 dropdown-arrow ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <div class="sidebar-dropdown" id="investor-crm-dropdown">
-                            <a href="#pipeline" class="sidebar-subitem">
-                                <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5" />
-                                </svg>
-                                <span>Pipeline</span>
-                            </a>
-                            <a href="#meetings" class="sidebar-subitem">
-                                <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <span>Meetings</span>
-                            </a>
-                            <a href="#documents" class="sidebar-subitem">
-                                <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                </svg>
-                                <span>Documents</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Q&A Management Section -->
-                    <div class="space-y-1">
-                        <button class="sidebar-item w-full" data-dropdown="qa-management">
-                            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span class="sidebar-text">Q&A Management</span>
-                            <svg class="w-4 h-4 dropdown-arrow ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-                        <div class="sidebar-dropdown" id="qa-management-dropdown">
-                            <a href="#qa-dashboard" class="sidebar-subitem">
-                                <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
-                                <span>Dashboard</span>
-                            </a>
-                            <a href="#templates" class="sidebar-subitem">
-                                <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-                                </svg>
-                                <span>Templates</span>
-                            </a>
-                        </div>
-                    </div>
                 </div>
-            </nav>
 
-            <!-- User Profile Section -->
-            <div class="border-t border-gray-200 p-4">
-                <div class="flex items-center">
-                    <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center" id="profileInitials">
-                        <span class="text-sm font-medium text-gray-600"></span>
-                    </div>
-                    <div class="ml-3 sidebar-text">
-                        <p class="text-sm font-medium text-gray-900" id="userName"></p>
-                        <p class="text-xs text-gray-500" id="userEmail"></p>
-                    </div>
-                </div>
-            </div>
-        </aside>
+                <!-- Navigation -->
+                <nav class="flex-1 overflow-y-auto py-4">
+                    <div class="px-3 space-y-1">
+                        <!-- Dashboard -->
+                        <a href="/dashboard.html" class="sidebar-item active">
+                            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                            <span class="sidebar-text">Dashboard</span>
+                        </a>
 
-        <!-- Main Content -->
-        <div class="flex-1">
-            <!-- Top Navigation -->
-            <nav class="bg-white shadow-sm">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                                <h1 class="text-xl font-semibold text-gray-900 flex items-center" id="current-section">Dashboard</h1>
+                        <!-- Investor CRM Section -->
+                        <div class="space-y-1">
+                            <button class="sidebar-item w-full" data-dropdown="investor-crm">
+                                <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <span class="sidebar-text">Investor CRM</span>
+                                <svg class="w-4 h-4 dropdown-arrow ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="sidebar-dropdown" id="investor-crm-dropdown">
+                                <a href="/investor-crm.html" class="sidebar-subitem">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5" />
+                                    </svg>
+                                    <span>Pipeline</span>
+                                </a>
+                                <a href="/investor-crm.html#meetings" class="sidebar-subitem">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>Meetings</span>
+                                </a>
+                                <a href="/investor-crm.html#documents" class="sidebar-subitem">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>Documents</span>
+                                </a>
                             </div>
                         </div>
-                        <!-- User Profile Dropdown -->
-                        <div class="flex items-center">
-                            <div class="ml-3 relative">
-                                <div>
-                                    <button type="button" class="flex items-center max-w-xs bg-white rounded-full focus:outline-none" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                        <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center" id="profileInitials">
-                                            <span class="text-sm font-medium text-gray-600"></span>
-                                        </div>
-                                        <span class="ml-3 text-gray-700" id="userName"></span>
-                                        <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <!-- Dropdown menu -->
-                                <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" role="menu" id="user-menu-dropdown">
-                                    <div class="py-1" role="none">
-                                        <a href="./profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
-                                        <button onclick="handlePasswordChange()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Change Password</button>
-                                        <button onclick="handleLogout()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</button>
-                                    </div>
-                                </div>
+
+                        <!-- Q&A Management Section -->
+                        <div class="space-y-1">
+                            <button class="sidebar-item w-full" data-dropdown="qa-management">
+                                <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="sidebar-text">Q&A Management</span>
+                                <svg class="w-4 h-4 dropdown-arrow ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="sidebar-dropdown" id="qa-management-dropdown">
+                                <a href="/qa-dashboard.html" class="sidebar-subitem">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="/qa-dashboard.html#templates" class="sidebar-subitem">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                                    </svg>
+                                    <span>Templates</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
 
-            <!-- Section Content -->
-            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                <!-- Content sections will be dynamically loaded here -->
-                <div id="section-content">
-                    <!-- Dashboard content (default view) -->
-                    <div id="dashboard-section" class="space-y-6">
-                        <!-- Welcome message -->
-                        <div class="bg-white shadow rounded-lg p-6">
-                            <h2 class="text-2xl font-semibold text-gray-900" id="welcome-message">Welcome back!</h2>
-                            <p class="mt-1 text-sm text-gray-600" id="user-email"></p>
+                <!-- User Profile Section -->
+                <div class="border-t border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center" id="profileInitials">
+                            <span class="text-sm font-medium text-gray-600"></span>
                         </div>
+                        <div class="ml-3 sidebar-text">
+                            <p class="text-sm font-medium text-gray-900" id="userName"></p>
+                            <p class="text-xs text-gray-500" id="userEmail"></p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
 
-                        <!-- Stats -->
-                        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                            <div class="bg-white overflow-hidden shadow rounded-lg">
-                                <div class="p-5">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <!-- Main Content -->
+            <div class="flex-1">
+                <!-- Top Navigation -->
+                <nav class="bg-white shadow-sm">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex justify-between h-16">
+                            <div class="flex">
+                                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                                    <h1 class="text-xl font-semibold text-gray-900 flex items-center" id="current-section">Dashboard</h1>
+                                </div>
+                            </div>
+                            <!-- User Profile Dropdown -->
+                            <div class="flex items-center">
+                                <div class="ml-3 relative">
+                                    <div>
+                                        <button type="button" class="flex items-center max-w-xs bg-white rounded-full focus:outline-none" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                            <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center" id="profileInitials">
+                                                <span class="text-sm font-medium text-gray-600"></span>
+                                            </div>
+                                            <span class="ml-3 text-gray-700" id="userName"></span>
+                                            <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                             </svg>
-                                        </div>
-                                        <div class="ml-5 w-0 flex-1">
-                                            <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Total Projects</dt>
-                                                <dd class="text-lg font-semibold text-gray-900" id="total-projects">0</dd>
-                                            </dl>
+                                        </button>
+                                    </div>
+                                    <!-- Dropdown menu -->
+                                    <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" role="menu" id="user-menu-dropdown">
+                                        <div class="py-1" role="none">
+                                            <a href="./profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+                                            <button onclick="handlePasswordChange()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Change Password</button>
+                                            <button onclick="handleLogout()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Add other stat cards here -->
                         </div>
+                    </div>
+                </nav>
 
-                        <!-- Recent Activity -->
-                        <div class="bg-white shadow rounded-lg">
-                            <div class="px-6 py-4 border-b border-gray-200">
-                                <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
+                <!-- Section Content -->
+                <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                    <!-- Content sections will be dynamically loaded here -->
+                    <div id="section-content">
+                        <!-- Dashboard content (default view) -->
+                        <div id="dashboard-section" class="space-y-6">
+                            <!-- Welcome message -->
+                            <div class="bg-white shadow rounded-lg p-6">
+                                <h2 class="text-2xl font-semibold text-gray-900" id="welcome-message">Welcome back!</h2>
+                                <p class="mt-1 text-sm text-gray-600" id="user-email"></p>
                             </div>
-                            <div class="divide-y divide-gray-200">
-                                <ul id="activity-list" class="divide-y divide-gray-200">
-                                    <!-- Activity items will be loaded here -->
-                                </ul>
+
+                            <!-- Stats -->
+                            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                                <div class="bg-white overflow-hidden shadow rounded-lg">
+                                    <div class="p-5">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="ml-5 w-0 flex-1">
+                                                <dl>
+                                                    <dt class="text-sm font-medium text-gray-500 truncate">Total Projects</dt>
+                                                    <dd class="text-lg font-semibold text-gray-900" id="total-projects">0</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add other stat cards here -->
+                            </div>
+
+                            <!-- Recent Activity -->
+                            <div class="bg-white shadow rounded-lg">
+                                <div class="px-6 py-4 border-b border-gray-200">
+                                    <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
+                                </div>
+                                <div class="divide-y divide-gray-200">
+                                    <ul id="activity-list" class="divide-y divide-gray-200">
+                                        <!-- Activity items will be loaded here -->
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -337,665 +430,117 @@
         </div>
     </div>
 
-    <script>
-        // Initialize Supabase client
-        const supabaseUrl = process.env.SUPABASE_URL || 'https://pqnntdsdtzgibqwuegwc.supabase.co';
-        const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxbm50ZHNkdHpnaWJxd3VlZ3djIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE0NDc1MzcsImV4cCI6MjA1NzAyMzUzN30.Wj0xa2UmZolk079DFzrstsBGzOAfgVlUMHJKDEqn8Jk';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+    <script type="module">
+        import { getCurrentUser, signOut } from './auth.js';
 
-        // Add these functions at the beginning of your script
-        async function loadUserProfile() {
-            try {
-                const { data: { user }, error } = await supabase.auth.getUser();
-                
-                if (error) throw error;
-                
-                if (user) {
-                    // Get user profile data
-                    const { data: profile, error: profileError } = await supabase
-                        .from('profiles')
-                        .select('*')
-                        .eq('id', user.id)
-                        .single();
+        // Check authentication on page load
+        async function checkAuth() {
+            const user = await getCurrentUser();
+            const overlay = document.getElementById('auth-check-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            // Update user information
+            updateUserInfo(user);
+            
+            overlay.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+        }
 
-                    if (profileError) throw profileError;
-
-                    // Set user name and email in the sidebar
-                    const userName = profile?.full_name || user.email?.split('@')[0] || 'User';
-                    const userEmail = user.email;
-                    const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
-
-                    // Update sidebar profile
-                    document.querySelectorAll('#profileInitials span').forEach(span => {
-                        span.textContent = initials;
-                    });
-                    document.querySelectorAll('#userName').forEach(el => {
-                        el.textContent = userName;
-                    });
-                    document.querySelectorAll('#userEmail').forEach(el => {
-                        el.textContent = userEmail;
-                    });
-
-                    // Update welcome message
-                    document.getElementById('welcome-message').textContent = `Welcome back, ${userName}!`;
-                    document.getElementById('user-email').textContent = userEmail;
-
-                    // Show the profile section
-                    document.querySelectorAll('.user-profile-section').forEach(section => {
-                        section.classList.remove('hidden');
-                    });
-                } else {
-                    // Redirect to login if no user
-                    window.location.href = './login.html';
-                }
-            } catch (error) {
-                console.error('Error loading user profile:', error);
+        // Update user information in the UI
+        function updateUserInfo(user) {
+            const userNameElements = document.querySelectorAll('#userName');
+            const userEmailElements = document.querySelectorAll('#userEmail');
+            const profileInitialsElements = document.querySelectorAll('#profileInitials span');
+            const welcomeMessage = document.getElementById('welcome-message');
+            
+            const email = user.email;
+            const initials = email.split('@')[0].substring(0, 2).toUpperCase();
+            
+            userNameElements.forEach(el => el.textContent = email.split('@')[0]);
+            userEmailElements.forEach(el => el.textContent = email);
+            profileInitialsElements.forEach(el => el.textContent = initials);
+            
+            if (welcomeMessage) {
+                welcomeMessage.textContent = `Welcome back, ${email.split('@')[0]}!`;
             }
         }
 
-        async function handleLogout() {
-            try {
-                const { error } = await supabase.auth.signOut();
-                if (error) throw error;
-                window.location.href = './login.html';
-            } catch (error) {
-                console.error('Error logging out:', error);
-            }
-        }
-
-        async function handlePasswordChange() {
-            try {
-                const { data: { user }, error } = await supabase.auth.getUser();
-                if (error) throw error;
-
-                const { error: resetError } = await supabase.auth.resetPasswordForEmail(user.email, {
-                    redirectTo: `${window.location.origin}/update-password.html`,
-                });
-
-                if (resetError) throw resetError;
-
-                alert('Password reset link has been sent to your email.');
-            } catch (error) {
-                console.error('Error initiating password change:', error);
-                alert('Failed to initiate password change. Please try again.');
-            }
-        }
-
-        // Add user menu toggle functionality
-        function toggleUserMenu() {
-            const menu = document.getElementById('user-menu-dropdown');
-            menu.classList.toggle('hidden');
-        }
-
-        // Handle section navigation
-        document.querySelectorAll('.sidebar-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const section = item.getAttribute('data-section');
-                
-                // Update active state
-                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-
-                // Update section title
-                document.getElementById('current-section').textContent = 
-                    section.charAt(0).toUpperCase() + section.slice(1).replace('-', ' ');
-
-                // Load section content
-                loadSectionContent(section);
-            });
+        // Handle sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
         });
 
         // Handle dropdown toggles
-        document.querySelectorAll('.sidebar-dropdown-button').forEach(button => {
+        const dropdownButtons = document.querySelectorAll('[data-dropdown]');
+        
+        dropdownButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const dropdownId = button.getAttribute('data-dropdown');
                 const dropdown = document.getElementById(`${dropdownId}-dropdown`);
-                const arrow = button.querySelector('svg:last-child');
+                const arrow = button.querySelector('.dropdown-arrow');
                 
-                // Toggle current dropdown
-                dropdown.classList.toggle('hidden');
-                button.classList.toggle('active');
-                arrow.classList.toggle('rotate-180');
+                // Toggle this dropdown
+                dropdown.classList.toggle('expanded');
+                arrow.classList.toggle('rotated');
                 
                 // Close other dropdowns
-                document.querySelectorAll('.sidebar-dropdown').forEach(d => {
-                    if (d.id !== `${dropdownId}-dropdown`) {
-                        d.classList.add('hidden');
-                        const otherButton = document.querySelector(`[data-dropdown="${d.id.replace('-dropdown', '')}"]`);
-                        if (otherButton) {
-                            otherButton.classList.remove('active');
-                            otherButton.querySelector('svg:last-child').classList.remove('rotate-180');
-                        }
+                dropdownButtons.forEach(otherButton => {
+                    if (otherButton !== button) {
+                        const otherId = otherButton.getAttribute('data-dropdown');
+                        const otherDropdown = document.getElementById(`${otherId}-dropdown`);
+                        const otherArrow = otherButton.querySelector('.dropdown-arrow');
+                        
+                        otherDropdown.classList.remove('expanded');
+                        otherArrow.classList.remove('rotated');
                     }
                 });
             });
         });
 
-        // Handle subitem active states
-        document.querySelectorAll('.sidebar-subitem').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Remove active class from all subitems
-                document.querySelectorAll('.sidebar-subitem').forEach(i => i.classList.remove('active'));
-                // Add active class to clicked item
-                item.classList.add('active');
-                
-                // Update section content
-                const section = item.getAttribute('data-section');
-                loadSectionContent(section);
-            });
+        // Handle user menu dropdown
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenuDropdown = document.getElementById('user-menu-dropdown');
+        
+        userMenuButton.addEventListener('click', () => {
+            userMenuDropdown.classList.toggle('hidden');
         });
 
-        // Keep dropdown open when subitems are clicked
-        document.querySelectorAll('.sidebar-dropdown').forEach(dropdown => {
-            dropdown.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
+        // Close user menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!userMenuButton.contains(event.target) && !userMenuDropdown.contains(event.target)) {
+                userMenuDropdown.classList.add('hidden');
+            }
         });
 
-        // Load section content
-        async function loadSectionContent(section) {
-            const contentDiv = document.getElementById('section-content');
-            
-            // Show loading state
-            contentDiv.innerHTML = '<div class="flex justify-center items-center h-64"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div></div>';
-
+        // Handle sign out
+        window.handleLogout = async () => {
             try {
-                switch(section) {
-                    case 'dashboard':
-                        await loadDashboardContent();
-                        break;
-                    case 'investor-pipeline':
-                        await loadPipelineContent();
-                        break;
-                    case 'meetings':
-                        await loadMeetingsContent();
-                        break;
-                    case 'documents':
-                        await loadDocumentsContent();
-                        break;
-                    case 'qa-dashboard':
-                        await loadQADashboardContent();
-                        break;
-                    case 'templates':
-                        await loadTemplatesContent();
-                        break;
-                    case 'analytics':
-                        await loadAnalyticsContent();
-                        break;
-                    // Add other section handlers
+                const { error } = await signOut();
+                if (error) {
+                    throw error;
                 }
+                window.location.href = '/login.html';
             } catch (error) {
-                console.error(`Error loading ${section} content:`, error);
-                contentDiv.innerHTML = `<div class="text-red-600">Error loading content. Please try again.</div>`;
+                alert('Error signing out: ' + error.message);
             }
-        }
-
-        // Section content loaders
-        async function loadDashboardContent() {
-            // Existing dashboard content loading logic
-        }
-
-        async function loadPipelineContent() {
-            const contentDiv = document.getElementById('section-content');
-            contentDiv.innerHTML = `
-                <div class="space-y-6">
-                    <div class="bg-white shadow rounded-lg p-6">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-semibold text-gray-900">Investment Pipeline</h2>
-                            <button class="gradient-bg text-white px-4 py-2 rounded-md">Add Investor</button>
-                        </div>
-                        <div class="mt-6">
-                            <!-- Pipeline stages -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                <!-- Add pipeline stages here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        async function loadMeetingsContent() {
-            const contentDiv = document.getElementById('section-content');
-            contentDiv.innerHTML = `
-                <div class="space-y-6">
-                    <div class="bg-white shadow rounded-lg p-6">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-semibold text-gray-900">Meeting Tracker</h2>
-                            <button class="gradient-bg text-white px-4 py-2 rounded-md">Schedule Meeting</button>
-                        </div>
-                        <div class="mt-6">
-                            <!-- Calendar view -->
-                            <div id="calendar"></div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        async function loadDocumentsContent() {
-            const contentDiv = document.getElementById('section-content');
-            contentDiv.innerHTML = `
-                <div class="space-y-6">
-                    <div class="bg-white shadow rounded-lg p-6">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-semibold text-gray-900">Document Management</h2>
-                            <button class="gradient-bg text-white px-4 py-2 rounded-md">Upload Document</button>
-                        </div>
-                        <div class="mt-6">
-                            <!-- Document list -->
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <!-- Add document cards here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        async function loadQADashboardContent() {
-            const mainContent = document.getElementById('main-content');
-            mainContent.innerHTML = `
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h1 class="text-2xl font-bold">Q&A Management</h1>
-                        <div class="space-x-4">
-                            <button onclick="openCategoryModal()" class="btn-primary">
-                                <i class="fas fa-folder-plus"></i> Manage Categories
-                            </button>
-                            <button onclick="openQAModal()" class="btn-primary">
-                                <i class="fas fa-plus"></i> Add Q&A
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow p-6 mb-6">
-                        <div class="flex space-x-4 mb-6">
-                            <div class="flex-1">
-                                <input type="text" id="qa-search" placeholder="Search questions and answers..." 
-                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    onkeyup="debounce(filterQAItems, 300)()">
-                            </div>
-                            <div class="w-64">
-                                <select id="category-filter" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    onchange="filterQAItems()">
-                                    <option value="">All Categories</option>
-                                </select>
-                            </div>
-                            <div class="w-48">
-                                <select id="status-filter" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    onchange="filterQAItems()">
-                                    <option value="">All Status</option>
-                                    <option value="published">Published</option>
-                                    <option value="draft">Draft</option>
-                                    <option value="archived">Archived</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div id="qa-list" class="space-y-4">
-                            <!-- Q&A items will be loaded here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Category Modal -->
-                <div id="category-modal" class="modal hidden">
-                    <div class="modal-content w-1/2">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-bold">Manage Categories</h2>
-                            <button onclick="closeCategoryModal()" class="text-gray-500 hover:text-gray-700">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="mb-4">
-                            <form id="category-form" onsubmit="handleCategorySubmit(event)">
-                                <div class="mb-4">
-                                    <input type="text" id="category-name" placeholder="Category Name" required
-                                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                </div>
-                                <div class="mb-4">
-                                    <textarea id="category-description" placeholder="Category Description"
-                                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                                </div>
-                                <button type="submit" class="btn-primary">Save Category</button>
-                            </form>
-                        </div>
-                        <div id="categories-list" class="mt-6">
-                            <!-- Categories will be listed here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Q&A Modal -->
-                <div id="qa-modal" class="modal hidden">
-                    <div class="modal-content w-2/3">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-bold">Add Q&A Item</h2>
-                            <button onclick="closeQAModal()" class="text-gray-500 hover:text-gray-700">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <form id="qa-form" onsubmit="handleQASubmit(event)">
-                            <div class="mb-4">
-                                <input type="text" id="qa-question" placeholder="Question" required
-                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            </div>
-                            <div class="mb-4">
-                                <textarea id="qa-answer" placeholder="Answer" required
-                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"></textarea>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <select id="qa-category" required
-                                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="">Select Category</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <select id="qa-status" required
-                                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="published">Published</option>
-                                        <option value="draft">Draft</option>
-                                        <option value="archived">Archived</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn-primary">Save Q&A</button>
-                        </form>
-                    </div>
-                </div>
-            `;
-
-            // Initialize the Q&A dashboard
-            initQADashboard();
-        }
-
-        // Q&A Dashboard Functions
-        async function initQADashboard() {
-            await loadCategories();
-            await loadQAItems();
-        }
-
-        async function loadCategories() {
-            try {
-                const { data: categories } = await supabase
-                    .from('qa_categories')
-                    .select('*')
-                    .order('name');
-
-                if (error) throw error;
-
-                // Populate category dropdowns
-                const categoryFilter = document.getElementById('category-filter');
-                const qaCategory = document.getElementById('qa-category');
-                const categoriesList = document.getElementById('categories-list');
-
-                const categoryOptions = categories.map(cat => `
-                    <option value="${cat.id}">${cat.name}</option>
-                `).join('');
-
-                categoryFilter.innerHTML += categoryOptions;
-                qaCategory.innerHTML = categoryOptions;
-
-                // Populate categories list in manage modal
-                categoriesList.innerHTML = categories.map(cat => `
-                    <div class="flex justify-between items-center p-3 border-b">
-                        <div>
-                            <h3 class="font-medium">${cat.name}</h3>
-                            <p class="text-sm text-gray-500">${cat.description || ''}</p>
-                        </div>
-                        <div class="space-x-2">
-                            <button onclick="editCategory('${cat.id}')" class="text-blue-500 hover:text-blue-700">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="deleteCategory('${cat.id}')" class="text-red-500 hover:text-red-700">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error('Error loading categories:', error);
-            }
-        }
-
-        async function loadQAItems(filters = {}) {
-            try {
-                let query = supabase
-                    .from('qa_items')
-                    .select(`
-                        *,
-                        category:qa_categories(name)
-                    `)
-                    .order('created_at', { ascending: false });
-
-                if (filters.category) {
-                    query = query.eq('category_id', filters.category);
-                }
-                if (filters.status) {
-                    query = query.eq('status', filters.status);
-                }
-                if (filters.search) {
-                    query = query.or(`question.ilike.%${filters.search}%,answer.ilike.%${filters.search}%`);
-                }
-
-                const { data: items, error } = await query;
-                if (error) throw error;
-
-                const qaList = document.getElementById('qa-list');
-                qaList.innerHTML = items.map((item, index) => `
-                    <div class="qa-item border rounded-lg p-4 ${item.status === 'published' ? 'bg-white' : 'bg-gray-50'}">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-lg font-medium cursor-pointer" onclick="toggleAnswer('${item.id}')">
-                                ${item.question}
-                                <i class="fas fa-chevron-down ml-2"></i>
-                            </h3>
-                            <div class="flex items-center space-x-2">
-                                <span class="px-2 py-1 text-sm rounded ${getStatusBadgeClass(item.status)}">
-                                    ${item.status}
-                                </span>
-                                <button onclick="editQAItem('${item.id}')" class="text-blue-500 hover:text-blue-700">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button onclick="deleteQAItem('${item.id}')" class="text-red-500 hover:text-red-700">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="qa-answer hidden mt-2 text-gray-600">
-                            ${item.answer}
-                        </div>
-                        <div class="mt-2 text-sm text-gray-500">
-                            Category: ${item.category.name}
-                        </div>
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error('Error loading Q&A items:', error);
-            }
-        }
-
-        function toggleAnswer(itemId) {
-            const qaItem = document.querySelector(`[onclick="toggleAnswer('${itemId}')"]`).closest('.qa-item');
-            const answer = qaItem.querySelector('.qa-answer');
-            const icon = qaItem.querySelector('.fa-chevron-down');
-            
-            answer.classList.toggle('hidden');
-            icon.classList.toggle('fa-chevron-down');
-            icon.classList.toggle('fa-chevron-up');
-        }
-
-        function getStatusBadgeClass(status) {
-            switch (status) {
-                case 'published':
-                    return 'bg-green-100 text-green-800';
-                case 'draft':
-                    return 'bg-yellow-100 text-yellow-800';
-                case 'archived':
-                    return 'bg-gray-100 text-gray-800';
-                default:
-                    return 'bg-gray-100 text-gray-800';
-            }
-        }
-
-        // Modal Functions
-        function openCategoryModal() {
-            document.getElementById('category-modal').classList.remove('hidden');
-        }
-
-        function closeCategoryModal() {
-            document.getElementById('category-modal').classList.add('hidden');
-            document.getElementById('category-form').reset();
-        }
-
-        function openQAModal() {
-            document.getElementById('qa-modal').classList.remove('hidden');
-        }
-
-        function closeQAModal() {
-            document.getElementById('qa-modal').classList.add('hidden');
-            document.getElementById('qa-form').reset();
-        }
-
-        // Form Handlers
-        async function handleCategorySubmit(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('category-name').value;
-            const description = document.getElementById('category-description').value;
-            
-            try {
-                await supabase
-                    .from('qa_categories')
-                    .insert([{ name, description }]);
-                await loadCategories();
-                closeCategoryModal();
-                showToast('Category created successfully');
-            } catch (error) {
-                console.error('Error creating category:', error);
-                showToast('Error creating category', 'error');
-            }
-        }
-
-        async function handleQASubmit(event) {
-            event.preventDefault();
-            
-            const question = document.getElementById('qa-question').value;
-            const answer = document.getElementById('qa-answer').value;
-            const categoryId = document.getElementById('qa-category').value;
-            const status = document.getElementById('qa-status').value;
-            
-            try {
-                await supabase
-                    .from('qa_items')
-                    .insert([{ question, answer, category_id: categoryId, status }]);
-                await loadQAItems();
-                closeQAModal();
-                showToast('Q&A item created successfully');
-            } catch (error) {
-                console.error('Error creating Q&A item:', error);
-                showToast('Error creating Q&A item', 'error');
-            }
-        }
-
-        // Filter Functions
-        const debounce = (func, wait) => {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
         };
 
-        async function filterQAItems() {
-            const search = document.getElementById('qa-search').value;
-            const categoryId = document.getElementById('category-filter').value;
-            const status = document.getElementById('status-filter').value;
-            
-            const filters = {
-                search: search || undefined,
-                categoryId: categoryId || undefined,
-                status: status || undefined
-            };
-            
-            await loadQAItems(filters);
-        }
+        // Handle password change
+        window.handlePasswordChange = () => {
+            // Implement password change functionality
+            alert('Password change functionality will be implemented soon.');
+        };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.getElementById('sidebar');
-            const sidebarToggle = document.getElementById('sidebar-toggle');
-            
-            // Toggle sidebar
-            sidebarToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('collapsed');
-                localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
-            });
-
-            // Restore sidebar state
-            const sidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-            if (sidebarCollapsed) {
-                sidebar.classList.add('collapsed');
-            }
-
-            // Handle dropdowns
-            document.querySelectorAll('[data-dropdown]').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const dropdownId = button.getAttribute('data-dropdown');
-                    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
-                    const arrow = button.querySelector('.dropdown-arrow');
-                    
-                    // Close other dropdowns
-                    document.querySelectorAll('.sidebar-dropdown').forEach(d => {
-                        if (d.id !== `${dropdownId}-dropdown`) {
-                            d.classList.remove('expanded');
-                            const otherButton = document.querySelector(`[data-dropdown="${d.id.replace('-dropdown', '')}"]`);
-                            if (otherButton) {
-                                otherButton.querySelector('.dropdown-arrow').classList.remove('rotated');
-                            }
-                        }
-                    });
-
-                    // Toggle current dropdown
-                    dropdown.classList.toggle('expanded');
-                    arrow.classList.toggle('rotated');
-                });
-            });
-
-            // Handle active states
-            document.querySelectorAll('.sidebar-item, .sidebar-subitem').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    if (!item.hasAttribute('data-dropdown')) {
-                        document.querySelectorAll('.sidebar-item, .sidebar-subitem').forEach(i => {
-                            i.classList.remove('active');
-                        });
-                        item.classList.add('active');
-                    }
-                });
-            });
-
-            // Load user profile when page loads
-            loadUserProfile();
-
-            // Add click event for user menu button
-            const userMenuButton = document.getElementById('user-menu-button');
-            userMenuButton.addEventListener('click', toggleUserMenu);
-
-            // Close user menu when clicking outside
-            document.addEventListener('click', (e) => {
-                const menu = document.getElementById('user-menu-dropdown');
-                const button = document.getElementById('user-menu-button');
-                if (!menu.contains(e.target) && !button.contains(e.target)) {
-                    menu.classList.add('hidden');
-                }
-            });
-        });
+        // Initialize page
+        checkAuth();
     </script>
 </body>
 </html> 

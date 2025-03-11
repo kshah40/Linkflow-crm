@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A Dashboard - LinkFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .category-pill {
+            transition: all 0.3s ease;
+        }
+        .category-pill:hover {
+            transform: translateY(-2px);
+        }
+        .qa-item {
+            transition: all 0.3s ease;
+        }
+        .qa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .qa-answer.show {
+            max-height: 500px;
+            transition: max-height 0.3s ease-in;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Auth Check Overlay -->
+    <div id="auth-check-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent mx-auto mb-4"></div>
+            <p class="text-gray-700">Checking authentication...</p>
+        </div>
+    </div>
+
+    <!-- Main Content (initially hidden) -->
+    <div id="main-content" class="hidden">
+        <nav class="bg-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex">
+                        <div class="flex-shrink-0 flex items-center">
+                            <img class="h-8 w-auto" src="https://raw.githubusercontent.com/kshah40/linkflow-crm/main/public/images/modern-logo.png" alt="LinkFlow">
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <button onclick="showAddQAModal()" class="mr-4 px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md">
+                            Add Q&A
+                        </button>
+                        <button id="signout-button" class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md">
+                            Sign Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header with Add Category Button -->
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">Q&A Management</h1>
+                <button onclick="showAddCategoryModal()" class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors">
+                    Add Category
+                </button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="mb-8">
+                <div class="relative">
+                    <input type="text" id="search" placeholder="Search Q&A..." class="w-full px-4 py-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="mb-8 overflow-x-auto">
+                <div class="flex space-x-4 pb-4" id="categories-container">
+                    <!-- Categories will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Q&A List -->
+            <div class="space-y-4" id="qa-list">
+                <!-- Q&A items will be dynamically added here -->
+            </div>
+        </main>
+
+        <!-- Add Category Modal -->
+        <div id="add-category-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                <h2 class="text-xl font-bold mb-4">Add New Category</h2>
+                <form id="add-category-form">
+                    <input type="text" id="category-name" placeholder="Category Name" class="w-full px-4 py-2 rounded-lg border border-gray-300 mb-4" required>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" onclick="hideAddCategoryModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Q&A Modal -->
+        <div id="add-qa-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
+                <h2 class="text-xl font-bold mb-4">Add New Q&A</h2>
+                <form id="add-qa-form">
+                    <select id="category" class="w-full px-4 py-2 rounded-lg border border-gray-300 mb-4" required>
+                        <option value="">Select Category</option>
+                    </select>
+                    <input type="text" id="question" placeholder="Question" class="w-full px-4 py-2 rounded-lg border border-gray-300 mb-4" required>
+                    <textarea id="answer" placeholder="Answer" class="w-full px-4 py-2 rounded-lg border border-gray-300 mb-4" rows="4" required></textarea>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" onclick="hideAddQAModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Q&A Modal -->
+        <div id="edit-qa-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
+                <h2 class="text-xl font-bold mb-4">Edit Q&A</h2>
+                <form id="edit-qa-form">
+                    <select id="edit-category" class="w-full px-4 py-2 rounded-lg border border-gray-300 mb-4" required>
+                        <option value="">Select Category</option>
+                    </select>
+                    <input type="text" id="edit-question" placeholder="Question" class="w-full px-4 py-2 rounded-lg border border-gray-300 mb-4" required>
+                    <textarea id="edit-answer" placeholder="Answer" class="w-full px-4 py-2 rounded-lg border border-gray-300 mb-4" rows="4" required></textarea>
+                    <input type="hidden" id="edit-qa-id">
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" onclick="hideEditQAModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { getCurrentUser, signOut } from './auth.js';
+
+        // Check authentication on page load
+        async function checkAuth() {
+            const user = await getCurrentUser();
+            const overlay = document.getElementById('auth-check-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            overlay.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+        }
+
+        // Handle sign out
+        document.getElementById('signout-button').addEventListener('click', async () => {
+            const { error } = await signOut();
+            if (error) {
+                alert(error.message);
+            }
+        });
+
+        // Initialize page
+        checkAuth();
+
+        // Make modal functions globally available
+        window.showAddCategoryModal = function() {
+            document.getElementById('add-category-modal').classList.remove('hidden');
+        };
+
+        window.hideAddCategoryModal = function() {
+            document.getElementById('add-category-modal').classList.add('hidden');
+        };
+
+        window.showAddQAModal = function() {
+            // Populate categories dropdown
+            const categorySelect = document.getElementById('category');
+            categorySelect.innerHTML = '<option value="">Select Category</option>';
+            window.categories.forEach(category => {
+                categorySelect.innerHTML += `<option value="${category.id}">${category.name}</option>`;
+            });
+            document.getElementById('add-qa-modal').classList.remove('hidden');
+        };
+
+        window.hideAddQAModal = function() {
+            document.getElementById('add-qa-modal').classList.add('hidden');
+            document.getElementById('add-qa-form').reset();
+        };
+
+        window.hideEditQAModal = function() {
+            document.getElementById('edit-qa-modal').classList.add('hidden');
+            document.getElementById('edit-qa-form').reset();
+        };
+    </script>
+
+    <script type="module" src="qa-dashboard.js"></script>
+</body>
+</html> 
