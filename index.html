@@ -294,8 +294,8 @@
         </div>
     </div>
 
-    <!-- Auth Check Overlay -->
-    <div id="auth-check-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <!-- Remove Auth Check Overlay -->
+    <div id="auth-check-overlay" class="hidden">
         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
             <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent mx-auto mb-4"></div>
             <p class="text-gray-700">Checking authentication...</p>
@@ -305,15 +305,12 @@
     <script type="module">
         import { getCurrentUser } from './auth.js';
 
-        // Check authentication on page load
+        // Simplify auth check to only redirect if already logged in
         async function checkAuth() {
             const user = await getCurrentUser();
             if (user) {
                 window.location.href = '/dashboard.html';
-                return;
             }
-            
-            document.getElementById('auth-check-overlay').classList.add('hidden');
         }
 
         // Mobile menu toggle
@@ -324,7 +321,7 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Initialize page
+        // Initialize page - only check auth once
         checkAuth();
     </script>
 </body>

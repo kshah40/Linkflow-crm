@@ -82,35 +82,70 @@
         </nav>
 
         <!-- Main Content -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Header with Add Category Button -->
-            <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-gray-900">Q&A Management</h1>
-                <button onclick="showAddCategoryModal()" class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors">
-                    Add Category
-                </button>
-            </div>
-
-            <!-- Search Bar -->
-            <div class="mb-8">
-                <div class="relative">
-                    <input type="text" id="search" placeholder="Search Q&A..." class="w-full px-4 py-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-gray-400"></i>
+        <main class="pt-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <!-- Hero Section -->
+                <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                    <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                            <span>Q&A Management</span>
+                            <br />
+                            <span class="gradient-text">Streamline Your Q&A Process</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            Efficiently manage and organize your Q&A content. Create templates, categorize questions, and maintain a comprehensive knowledge base.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-md shadow">
+                                <a href="/login.html?signup=true" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white gradient-bg hover:opacity-90 md:py-4 md:text-lg md:px-10">
+                                    Get Started
+                                </a>
+                            </div>
+                            <div class="mt-3 sm:mt-0 sm:ml-3">
+                                <a href="#features" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-gray-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10">
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+                        <div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                            <div class="relative block w-full bg-white rounded-lg overflow-hidden">
+                                <img class="w-full animate-float" src="https://raw.githubusercontent.com/kshah40/linkflow-crm/main/public/images/qa-management-illustration.svg" alt="Q&A Management Illustration">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Categories -->
-            <div class="mb-8 overflow-x-auto">
-                <div class="flex space-x-4 pb-4" id="categories-container">
-                    <!-- Categories will be dynamically added here -->
+                <!-- Header with Add Category Button -->
+                <div class="flex justify-between items-center mb-8">
+                    <h1 class="text-2xl font-bold text-gray-900">Q&A Management</h1>
+                    <button onclick="showAddCategoryModal()" class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors">
+                        Add Category
+                    </button>
                 </div>
-            </div>
 
-            <!-- Q&A List -->
-            <div class="space-y-4" id="qa-list">
-                <!-- Q&A items will be dynamically added here -->
+                <!-- Search Bar -->
+                <div class="mb-8">
+                    <div class="relative">
+                        <input type="text" id="search" placeholder="Search Q&A..." class="w-full px-4 py-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="mb-8 overflow-x-auto">
+                    <div class="flex space-x-4 pb-4" id="categories-container">
+                        <!-- Categories will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- Q&A List -->
+                <div class="space-y-4" id="qa-list">
+                    <!-- Q&A items will be dynamically added here -->
+                </div>
             </div>
         </main>
 
