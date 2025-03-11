@@ -191,59 +191,45 @@
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm fixed w-full top-0 z-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="index.html" class="modern-logo">
-                        <div class="logo-icon">
-                            <div class="logo-symbol"></div>
-                        </div>
-                        <div class="logo-text">
-                            <span>LinkFlow</span>
-                        </div>
+                    <a href="/" class="flex items-center">
+                        <img src="https://raw.githubusercontent.com/kshah40/linkflow-crm/main/public/images/modern-logo.png" alt="LinkFlow Logo" class="h-12">
+                        <span class="text-4xl font-bold text-gray-900 ml-2">LinkFlow</span>
                     </a>
-                    <!-- Mobile menu button -->
-                    <div class="sm:hidden ml-4">
-                        <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
-                            <span class="sr-only">Open main menu</span>
-                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="hidden md:flex ml-10 space-x-8">
-                        <a href="investor-crm.html" class="text-gray-500 hover:text-gray-900">Investor CRM</a>
-                        <a href="qa-management.html" class="text-primary-600 font-medium">Q&A Management</a>
-                        <a href="blog.html" class="text-gray-500 hover:text-gray-900">Blog</a>
-                    </div>
                 </div>
-                <div class="hidden sm:flex sm:items-center space-x-4">
-                    <a href="/login" class="text-gray-600 hover:text-gray-900">Sign In</a>
-                    <a href="/login?signup=true" class="gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90">Get Started</a>
+
+                <!-- Mobile menu button -->
+                <div class="flex items-center -mr-2 sm:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Desktop navigation -->
+                <div class="hidden sm:flex sm:items-center sm:space-x-4">
+                    <a href="/investor-crm" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Investor CRM</a>
+                    <a href="/qa-management" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Q&A Management</a>
+                    <a href="/blog" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Blog</a>
+                    <a href="/login" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Sign In</a>
+                    <a href="/login?signup=true" class="bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 rounded-md text-sm font-medium">Get Started</a>
                 </div>
             </div>
         </div>
-        <!-- Mobile menu -->
-        <div class="sm:hidden" id="mobile-menu">
-            <div class="pt-2 pb-3 space-y-1">
-                <a href="/investor-crm" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
-                    Investor CRM
-                </a>
-                <a href="/qa-management" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
-                    Q&A Management
-                </a>
-                <a href="/blog" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
-                    Blog
-                </a>
-                <div class="pt-4 pb-3 border-t border-gray-200">
-                    <a href="/login" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
-                        Sign In
-                    </a>
-                    <a href="/login?signup=true" class="text-gray-500 hover:text-gray-900 block px-3 py-2 text-base font-medium">
-                        Get Started
-                    </a>
-                </div>
+
+        <!-- Mobile navigation menu -->
+        <div id="mobile-menu" class="hidden sm:hidden fixed top-16 right-0 bottom-0 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out">
+            <div class="pt-2 pb-3 space-y-1 border-t border-gray-200">
+                <a href="/investor-crm" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Investor CRM</a>
+                <a href="/qa-management" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Q&A Management</a>
+                <a href="/blog" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Blog</a>
+                <a href="/login" class="block px-4 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50">Sign In</a>
+                <a href="/login?signup=true" class="block px-4 py-2 text-base font-medium bg-primary-600 text-white hover:bg-primary-700">Get Started</a>
             </div>
         </div>
     </nav>
@@ -353,16 +339,54 @@
     </footer>
 
     <script>
-        // Mobile menu functionality
+        // Mobile menu toggle functionality
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-
-            // Initially hide the menu
-            mobileMenu.classList.add('hidden');
+            let isMenuOpen = false;
 
             mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenu.classList.add('translate-x-0');
+                    mobileMenu.classList.remove('translate-x-full');
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenu.classList.remove('translate-x-0');
+                    setTimeout(() => {
+                        if (!isMenuOpen) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }, 300);
+                }
+
+                // Update button icon
+                const svg = this.querySelector('svg');
+                if (isMenuOpen) {
+                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                } else {
+                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                }
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = mobileMenuButton.contains(event.target) || mobileMenu.contains(event.target);
+                if (!isClickInside && isMenuOpen) {
+                    isMenuOpen = false;
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenu.classList.remove('translate-x-0');
+                    setTimeout(() => {
+                        if (!isMenuOpen) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }, 300);
+                    
+                    // Reset button icon
+                    const svg = mobileMenuButton.querySelector('svg');
+                    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                }
             });
         });
     </script>
